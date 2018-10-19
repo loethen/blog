@@ -229,12 +229,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/08/13/flask装饰器/">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/10/16/ELO-rating-system匹配算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2018/08/13/flask装饰器/" itemprop="url">flask装饰器</a></h1>
+                <a class="post-title-link" href="/blog/2018/10/16/ELO-rating-system匹配算法/" itemprop="url">ELO rating system匹配算法</a></h1>
         
 
         <div class="post-meta">
@@ -260,8 +260,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-13T16:56:21+08:00">
-                2018-08-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:06:10+08:00">
+                2018-10-16
               </time>
             
 
@@ -348,12 +348,335 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/10/16/fish-shuffle洗牌算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="litte F and little E">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/10/16/fish-shuffle洗牌算法/" itemprop="url">fish shuffle洗牌算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:05:12+08:00">
+                2018-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/08/13/flask装饰器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="litte F and little E">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/08/13/flask装饰器/" itemprop="url">flask decorators</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-13T16:56:21+08:00">
+                2018-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)<br>刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器</p>
+<pre><code>@app.route(&apos;/&apos;)
+def index():
+    return render_template(&apos;index.html&apos;)
+</code></pre><p>那么，到底什么是decorator呢? decorator就是一个函数，这个函数接受另外一个函数作为参数，看下面的例子</p>
+<pre><code>@decorate
+def target():
+    print(&apos;running target&apos;)
+</code></pre><p>这段代码的意思跟下面这段完全一样</p>
+<pre><code>def target():
+    print(&apos;running target&apos;)
+
+target = decorate(target)
+</code></pre><p>但是请记住，这两段代码最后结果中的target已经不是原来的target函数的引用了，而是decorate(target)的引用。可能比较拗口，但是一定要理解。</p>
+<h2 id="这里有一个问题，非常重要，就是python什么时候执行decorators"><a href="#这里有一个问题，非常重要，就是python什么时候执行decorators" class="headerlink" title="这里有一个问题，非常重要，就是python什么时候执行decorators"></a>这里有一个问题，非常重要，就是python什么时候执行decorators</h2><p>来，下面我们通过代码片段abc.py来看</p>
+<pre><code>registry = []
+def register(func):
+    print(&apos;running register(%s)&apos; % func)
+    registry.append(func)
+    return func
+
+@register
+def f1():
+    print(&apos;running f1&apos;)
+
+@register
+def f2():
+    print(&apos;running f2&apos;)
+
+def main():
+    print(&apos;running main&apos;)
+    print(&apos;registry -&gt;&apos;, resigtry)
+    f1()
+    f2()
+
+if __name__ == &apos;__main__&apos;
+    main()
+</code></pre><p>保存以上代码，并运行。</p>
+<pre><code>python3 abc.py
+</code></pre><p>你可以看到结果是</p>
+<pre><code>running register f1
+running register f2
+running main
+registry -&gt; [f1,f2]
+running f1
+running f2
+</code></pre><p>你可能已经猜到这里面的关键了。</p>
+<p>在模块被载入的时候，decorator就已经执行了。but! 注意这里的but!  被装饰的函数，比如f1,f2是要等到显式的调用才会执行。这里是装饰器的关键。<br>写到这里，是不是可以大概知道flask中装饰器是怎么起作用的？</p>
+<pre><code>@app.route(&apos;/&apos;)
+def index():
+    return render_template(&apos;index.html&apos;)
+</code></pre><p>我们来看一下flask中route装饰器的源码</p>
+<pre><code>def route(self, rule, **options):
+    &quot;&quot;&quot;A decorator that is used to register a view function for a
+    given URL rule.  This does the same thing as :meth:`add_url_rule`
+    but is intended for decorator usage::
+
+        @app.route(&apos;/&apos;)
+        def index():
+            return &apos;Hello World&apos;
+
+    For more information refer to :ref:`url-route-registrations`.
+
+    :param rule: the URL rule as string
+    :param endpoint: the endpoint for the registered URL rule.  Flask
+                     itself assumes the name of the view function as
+                     endpoint
+    :param options: the options to be forwarded to the underlying
+                    :class:`~werkzeug.routing.Rule` object.  A change
+                    to Werkzeug is handling of method options.  methods
+                    is a list of methods this rule should be limited
+                    to (``GET``, ``POST`` etc.).  By default a rule
+                    just listens for ``GET`` (and implicitly ``HEAD``).
+                    Starting with Flask 0.6, ``OPTIONS`` is implicitly
+                    added and handled by the standard request handling.
+    &quot;&quot;&quot;
+    def decorator(f):
+        endpoint = options.pop(&apos;endpoint&apos;, None)
+        self.add_url_rule(rule, endpoint, f, **options)
+        return f
+    return decorator
+</code></pre><p>我们来一步一步分析这个函数。</p>
+<p>因为@route需要接受参数，路由规则是必须的。所以 </p>
+<pre><code>def route(self, rule, **option)
+</code></pre><p>其实是一个函数工厂，真正的decorator从内部的decorator()函数开始</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/08/10/flask-with-celery/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -495,7 +818,7 @@ app = create_app(os.getenv(&apos;CONFIG&apos;) or &apos;default&apos;)
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -641,7 +964,7 @@ a2 // [2, 4, 6, 8]
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -799,7 +1122,7 @@ leftpad(1, 2, 0)
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -995,7 +1318,7 @@ obj2.a.b // 2
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1186,7 +1509,7 @@ console.log(&apos;total:&apos;+farm.length)
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1369,7 +1692,7 @@ sub.remove()
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/blog/blog/images/cat.png"
+                src="/blog/images/cat.png"
                 alt="loethen" />
             
               <p class="site-author-name" itemprop="name">loethen</p>
@@ -1383,7 +1706,7 @@ sub.remove()
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

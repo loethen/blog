@@ -79,14 +79,17 @@
 
 
 
+<meta name="description" content="今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器 @app.route(&amp;apos;/&amp;apos;) def index():     return render_template(&amp;apos;index.html&amp;apos;) 那么，到底什么是decorato">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flask装饰器">
+<meta property="og:title" content="flask decorators">
 <meta property="og:url" content="http://loethen.github.io/blog/2018/08/13/flask装饰器/index.html">
 <meta property="og:site_name" content="litte F and little E">
+<meta property="og:description" content="今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器 @app.route(&amp;apos;/&amp;apos;) def index():     return render_template(&amp;apos;index.html&amp;apos;) 那么，到底什么是decorato">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-08-13T08:56:22.026Z">
+<meta property="og:updated_time" content="2018-10-19T09:22:42.258Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flask装饰器">
+<meta name="twitter:title" content="flask decorators">
+<meta name="twitter:description" content="今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器 @app.route(&amp;apos;/&amp;apos;) def index():     return render_template(&amp;apos;index.html&amp;apos;) 那么，到底什么是decorato">
 
 
 
@@ -122,7 +125,7 @@
 
 
 
-  <title>flask装饰器 | litte F and little E</title>
+  <title>flask decorators | litte F and little E</title>
   
 
 
@@ -234,7 +237,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/blog/images/cat.png">
+      <meta itemprop="image" content="/blog/images/cat.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -246,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">flask装饰器</h1>
+          <h1 class="post-title" itemprop="name headline">flask decorators</h1>
         
 
         <div class="post-meta">
@@ -296,7 +299,92 @@
       
 
       
-        
+        <p>今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)<br>刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器</p>
+<pre><code>@app.route(&apos;/&apos;)
+def index():
+    return render_template(&apos;index.html&apos;)
+</code></pre><p>那么，到底什么是decorator呢? decorator就是一个函数，这个函数接受另外一个函数作为参数，看下面的例子</p>
+<pre><code>@decorate
+def target():
+    print(&apos;running target&apos;)
+</code></pre><p>这段代码的意思跟下面这段完全一样</p>
+<pre><code>def target():
+    print(&apos;running target&apos;)
+
+target = decorate(target)
+</code></pre><p>但是请记住，这两段代码最后结果中的target已经不是原来的target函数的引用了，而是decorate(target)的引用。可能比较拗口，但是一定要理解。</p>
+<h2 id="这里有一个问题，非常重要，就是python什么时候执行decorators"><a href="#这里有一个问题，非常重要，就是python什么时候执行decorators" class="headerlink" title="这里有一个问题，非常重要，就是python什么时候执行decorators"></a>这里有一个问题，非常重要，就是python什么时候执行decorators</h2><p>来，下面我们通过代码片段abc.py来看</p>
+<pre><code>registry = []
+def register(func):
+    print(&apos;running register(%s)&apos; % func)
+    registry.append(func)
+    return func
+
+@register
+def f1():
+    print(&apos;running f1&apos;)
+
+@register
+def f2():
+    print(&apos;running f2&apos;)
+
+def main():
+    print(&apos;running main&apos;)
+    print(&apos;registry -&gt;&apos;, resigtry)
+    f1()
+    f2()
+
+if __name__ == &apos;__main__&apos;
+    main()
+</code></pre><p>保存以上代码，并运行。</p>
+<pre><code>python3 abc.py
+</code></pre><p>你可以看到结果是</p>
+<pre><code>running register f1
+running register f2
+running main
+registry -&gt; [f1,f2]
+running f1
+running f2
+</code></pre><p>你可能已经猜到这里面的关键了。</p>
+<p>在模块被载入的时候，decorator就已经执行了。but! 注意这里的but!  被装饰的函数，比如f1,f2是要等到显式的调用才会执行。这里是装饰器的关键。<br>写到这里，是不是可以大概知道flask中装饰器是怎么起作用的？</p>
+<pre><code>@app.route(&apos;/&apos;)
+def index():
+    return render_template(&apos;index.html&apos;)
+</code></pre><p>我们来看一下flask中route装饰器的源码</p>
+<pre><code>def route(self, rule, **options):
+    &quot;&quot;&quot;A decorator that is used to register a view function for a
+    given URL rule.  This does the same thing as :meth:`add_url_rule`
+    but is intended for decorator usage::
+
+        @app.route(&apos;/&apos;)
+        def index():
+            return &apos;Hello World&apos;
+
+    For more information refer to :ref:`url-route-registrations`.
+
+    :param rule: the URL rule as string
+    :param endpoint: the endpoint for the registered URL rule.  Flask
+                     itself assumes the name of the view function as
+                     endpoint
+    :param options: the options to be forwarded to the underlying
+                    :class:`~werkzeug.routing.Rule` object.  A change
+                    to Werkzeug is handling of method options.  methods
+                    is a list of methods this rule should be limited
+                    to (``GET``, ``POST`` etc.).  By default a rule
+                    just listens for ``GET`` (and implicitly ``HEAD``).
+                    Starting with Flask 0.6, ``OPTIONS`` is implicitly
+                    added and handled by the standard request handling.
+    &quot;&quot;&quot;
+    def decorator(f):
+        endpoint = options.pop(&apos;endpoint&apos;, None)
+        self.add_url_rule(rule, endpoint, f, **options)
+        return f
+    return decorator
+</code></pre><p>我们来一步一步分析这个函数。</p>
+<p>因为@route需要接受参数，路由规则是必须的。所以 </p>
+<pre><code>def route(self, rule, **option)
+</code></pre><p>其实是一个函数工厂，真正的decorator从内部的decorator()函数开始</p>
+
       
     </div>
     
@@ -329,6 +417,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/10/16/fish-shuffle洗牌算法/" rel="prev" title="fish shuffle洗牌算法">
+                fish shuffle洗牌算法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -380,13 +472,22 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/blog/blog/images/cat.png"
+                src="/blog/images/cat.png"
                 alt="loethen" />
             
               <p class="site-author-name" itemprop="name">loethen</p>
@@ -400,7 +501,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -436,6 +537,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#这里有一个问题，非常重要，就是python什么时候执行decorators"><span class="nav-number">1.</span> <span class="nav-text">这里有一个问题，非常重要，就是python什么时候执行decorators</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

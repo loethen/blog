@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="按位操作符," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,14 @@
 
 
 
-<meta name="description" content="这两天Npm leftpad的新闻真是挺火的，详情点这里了解，来龙去脉就不讲了，跟本文也没有太大的关系。这篇文章主要想说一说我们很少用到的位操作符，然而位操作符跟这件事情有什么关系呢？ 这要从leftpad的用处说起。leftpad这个模块起一个很简单的作用，从左边补位。看示例代码 leftpad(&amp;apos;foo&amp;apos;, 5) // =&amp;gt; &amp;quot;  foo&amp;quot;   l">
-<meta name="keywords" content="按位操作符">
 <meta property="og:type" content="article">
-<meta property="og:title" content="left-pad和按位操作符">
-<meta property="og:url" content="http://loethen.github.io/blog/2016/03/25/leftpad和按位操作符/index.html">
+<meta property="og:title" content="fish shuffle洗牌算法">
+<meta property="og:url" content="http://loethen.github.io/blog/2018/10/16/fish-shuffle洗牌算法/index.html">
 <meta property="og:site_name" content="litte F and little E">
-<meta property="og:description" content="这两天Npm leftpad的新闻真是挺火的，详情点这里了解，来龙去脉就不讲了，跟本文也没有太大的关系。这篇文章主要想说一说我们很少用到的位操作符，然而位操作符跟这件事情有什么关系呢？ 这要从leftpad的用处说起。leftpad这个模块起一个很简单的作用，从左边补位。看示例代码 leftpad(&amp;apos;foo&amp;apos;, 5) // =&amp;gt; &amp;quot;  foo&amp;quot;   l">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2016-03-28T02:29:47.000Z">
+<meta property="og:updated_time" content="2018-10-16T01:05:12.899Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="left-pad和按位操作符">
-<meta name="twitter:description" content="这两天Npm leftpad的新闻真是挺火的，详情点这里了解，来龙去脉就不讲了，跟本文也没有太大的关系。这篇文章主要想说一说我们很少用到的位操作符，然而位操作符跟这件事情有什么关系呢？ 这要从leftpad的用处说起。leftpad这个模块起一个很简单的作用，从左边补位。看示例代码 leftpad(&amp;apos;foo&amp;apos;, 5) // =&amp;gt; &amp;quot;  foo&amp;quot;   l">
+<meta name="twitter:title" content="fish shuffle洗牌算法">
 
 
 
@@ -120,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://loethen.github.io/blog/2016/03/25/leftpad和按位操作符/"/>
+  <link rel="canonical" href="http://loethen.github.io/blog/2018/10/16/fish-shuffle洗牌算法/"/>
 
 
 
 
 
-  <title>left-pad和按位操作符 | litte F and little E</title>
+  <title>fish shuffle洗牌算法 | litte F and little E</title>
   
 
 
@@ -233,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/25/leftpad和按位操作符/">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/10/16/fish-shuffle洗牌算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
@@ -250,7 +246,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">left-pad和按位操作符</h1>
+          <h1 class="post-title" itemprop="name headline">fish shuffle洗牌算法</h1>
         
 
         <div class="post-meta">
@@ -262,8 +258,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-25T20:53:33+08:00">
-                2016-03-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:05:12+08:00">
+                2018-10-16
               </time>
             
 
@@ -300,46 +296,7 @@
       
 
       
-        <p>这两天Npm leftpad的新闻真是挺火的，详情<a href="http://www.businessinsider.com/npm-left-pad-controversy-explained-2016-3" target="_blank" rel="noopener">点这里</a>了解，来龙去脉就不讲了，跟本文也没有太大的关系。这篇文章主要想说一说我们很少用到的<em>位操作符</em>，然而位操作符跟这件事情有什么关系呢？</p>
-<p>这要从leftpad的用处说起。leftpad这个模块起一个很简单的作用，从左边补位。看示例代码</p>
-<pre><code>leftpad(&apos;foo&apos;, 5)
-// =&gt; &quot;  foo&quot; 
-
-leftpad(&apos;foobar&apos;, 6)
-// =&gt; &quot;foobar&quot; 
-
-leftpad(1, 2, 0)
-// =&gt; &quot;01&quot; 
-</code></pre><h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><pre><code>第一个参数是字符串，
-第二个参数是字符串的长度，
-第三个参数是补位的字符串默认是空字符串。
-</code></pre><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><pre><code>function leftpad(str,len,ch){
-    if(!ch &amp;&amp; ch!==0){
-        ch = &apos; &apos;
-    }
-
-    var count = len - str.length;
-
-    if(count&lt;0) return str;
-
-    var rpt = &apos;&apos;;
-
-    for(;;){
-        //count为奇数的时候执行，其实只要count为1执行就可以了，这样写我认为是为了速度更快
-        if(count &amp; 1) rpt += ch ;
-
-        //无符号右移。代码的core所在
-        count &gt;&gt;&gt;= 1;
-
-        if(count == 0) break;
-        ch += ch
-    }
-
-    return rpt + str;
-}
-</code></pre><p>注意for循环里面的代码。因为位操作符是比较少用，正好复习一下。<br>for循环里并不关心count的值是几，而是每次循环按位向右移动，只要判断值是否等于0，也就是右移到边界(二进制里面所有的1都移走了)。<br>按位操作符为什么比较快，因为位运算直接对内存数据进行操作，不需要转成十进制，因此处理速度非常快。</p>
-<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><p>按位操作可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators#.26_(.E6.8C.89.E4.BD.8D.E4.B8.8E" target="_blank" rel="noopener">MDN上的文档</a>)</p>
-
+        
       
     </div>
     
@@ -354,12 +311,6 @@ leftpad(1, 2, 0)
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/blog/tags/按位操作符/" rel="tag"># 按位操作符</a>
-          
-        </div>
-      
 
       
       
@@ -369,8 +320,8 @@ leftpad(1, 2, 0)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2016/03/15/Javascript-deep-copy-and-shallow-copy/" rel="next" title="Javascript deep copy and shallow copy">
-                <i class="fa fa-chevron-left"></i> Javascript deep copy and shallow copy
+              <a href="/blog/2018/08/13/flask装饰器/" rel="next" title="flask decorators">
+                <i class="fa fa-chevron-left"></i> flask decorators
               </a>
             
           </div>
@@ -379,8 +330,8 @@ leftpad(1, 2, 0)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2016/03/31/javascript数组中的各种循环和返回值/" rel="prev" title="javascript数组中的各种循环和返回值">
-                javascript数组中的各种循环和返回值 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2018/10/16/ELO-rating-system匹配算法/" rel="prev" title="ELO rating system匹配算法">
+                ELO rating system匹配算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -433,17 +384,8 @@ leftpad(1, 2, 0)
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -498,22 +440,6 @@ leftpad(1, 2, 0)
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数说明"><span class="nav-number">1.</span> <span class="nav-text">参数说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tips"><span class="nav-number">3.</span> <span class="nav-text">tips</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
