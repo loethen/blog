@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="litte F and little E">
 <meta property="og:description" content="今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器 @app.route(&amp;apos;/&amp;apos;) def index():     return render_template(&amp;apos;index.html&amp;apos;) 那么，到底什么是decorato">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-10-19T09:22:42.258Z">
+<meta property="og:updated_time" content="2018-10-20T11:13:59.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flask decorators">
 <meta name="twitter:description" content="今天我们不讲三国，我们好好讲一讲python的decorator(装饰器)刚开始接触这个概念其实很容易迷惑，我也是从半懂不懂就开始使用，因为flask的例子中总会提到这个route装饰器 @app.route(&amp;apos;/&amp;apos;) def index():     return render_template(&amp;apos;index.html&amp;apos;) 那么，到底什么是decorato">
@@ -303,7 +303,7 @@
 <pre><code>@app.route(&apos;/&apos;)
 def index():
     return render_template(&apos;index.html&apos;)
-</code></pre><p>那么，到底什么是decorator呢? decorator就是一个函数，这个函数接受另外一个函数作为参数，看下面的例子</p>
+</code></pre><p>那么，到底什么是decorator呢? 其实decorator就是一个函数，这个函数接受另外一个函数作为参数，@decorate这种写法这是python提供的语法糖，看下面的例子</p>
 <pre><code>@decorate
 def target():
     print(&apos;running target&apos;)
@@ -346,44 +346,33 @@ registry -&gt; [f1,f2]
 running f1
 running f2
 </code></pre><p>你可能已经猜到这里面的关键了。</p>
-<p>在模块被载入的时候，decorator就已经执行了。but! 注意这里的but!  被装饰的函数，比如f1,f2是要等到显式的调用才会执行。这里是装饰器的关键。<br>写到这里，是不是可以大概知道flask中装饰器是怎么起作用的？</p>
+<p>在模块被载入的时候，装饰器就已经执行了。but! 注意这里的but!  被装饰的函数，比如f1,f2是要等到显式的调用才会执行。这里是装饰器的关键。<br>写到这里，是不是可以大概知道flask中装饰器是怎么起作用的？</p>
 <pre><code>@app.route(&apos;/&apos;)
 def index():
     return render_template(&apos;index.html&apos;)
 </code></pre><p>我们来看一下flask中route装饰器的源码</p>
 <pre><code>def route(self, rule, **options):
-    &quot;&quot;&quot;A decorator that is used to register a view function for a
-    given URL rule.  This does the same thing as :meth:`add_url_rule`
-    but is intended for decorator usage::
-
-        @app.route(&apos;/&apos;)
-        def index():
-            return &apos;Hello World&apos;
-
-    For more information refer to :ref:`url-route-registrations`.
-
-    :param rule: the URL rule as string
-    :param endpoint: the endpoint for the registered URL rule.  Flask
-                     itself assumes the name of the view function as
-                     endpoint
-    :param options: the options to be forwarded to the underlying
-                    :class:`~werkzeug.routing.Rule` object.  A change
-                    to Werkzeug is handling of method options.  methods
-                    is a list of methods this rule should be limited
-                    to (``GET``, ``POST`` etc.).  By default a rule
-                    just listens for ``GET`` (and implicitly ``HEAD``).
-                    Starting with Flask 0.6, ``OPTIONS`` is implicitly
-                    added and handled by the standard request handling.
-    &quot;&quot;&quot;
     def decorator(f):
         endpoint = options.pop(&apos;endpoint&apos;, None)
         self.add_url_rule(rule, endpoint, f, **options)
         return f
     return decorator
-</code></pre><p>我们来一步一步分析这个函数。</p>
-<p>因为@route需要接受参数，路由规则是必须的。所以 </p>
+</code></pre><p>我们来分析一下这个函数。</p>
+<p>因为app.route需要接受参数，路由规则是必须的。所以 </p>
 <pre><code>def route(self, rule, **option)
 </code></pre><p>其实是一个函数工厂，真正的decorator从内部的decorator()函数开始</p>
+<p>decorator(f)函数内部有一个函数 add_url_rule</p>
+<p>这段代码</p>
+<pre><code>@app.route(&apos;/&apos;)
+def index():
+    pass
+</code></pre><p>和下面这段代码表达的意思是一样的。</p>
+<pre><code>def index():
+    pass
+app.add_url_rule(&apos;/&apos;, &apos;index&apos;, index)
+</code></pre><p>也就是decorator(f)内部做的事情，在函数内部调用<a href="http://flask.pocoo.org/docs/1.0/api/#flask.Flask.add_url_rule" target="_blank" rel="noopener">add_url_rule()</a></p>
+<p>装饰器真的是一个很方便的功能。</p>
+<p>End</p>
 
       
     </div>
