@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="eventloop," />
 
 
 
@@ -79,14 +79,21 @@
 
 
 
+<meta name="description" content="JavaScript中的事件循环JS中的事件循环你可能你知道，也可能你不知道，也可能你不知道自己到底知不知道，当然了，不管你知不知道，你每天写的JS代码都离不开这个概念，不管是客户端，还是Node. 我们先看下面的例子 console.log(&amp;apos;Hi&amp;apos;) setTImeout(function(){     console.log(&amp;apos;there&amp;apos;) },50">
+<meta name="keywords" content="eventloop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELO rating system匹配算法">
-<meta property="og:url" content="http://loethen.github.io/blog/2018/10/16/ELO-rating-system匹配算法/index.html">
+<meta property="og:title" content="JavaScript Event Loop">
+<meta property="og:url" content="http://loethen.github.io/blog/2018/12/14/JavaScript-Event-Loop/index.html">
 <meta property="og:site_name" content="litte F and little E">
+<meta property="og:description" content="JavaScript中的事件循环JS中的事件循环你可能你知道，也可能你不知道，也可能你不知道自己到底知不知道，当然了，不管你知不知道，你每天写的JS代码都离不开这个概念，不管是客户端，还是Node. 我们先看下面的例子 console.log(&amp;apos;Hi&amp;apos;) setTImeout(function(){     console.log(&amp;apos;there&amp;apos;) },50">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-10-16T01:06:10.264Z">
+<meta property="og:image" content="https://developer.mozilla.org/files/4617/default.svg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/67963c19gy1fy9uiuk6yhj212w0lg7ca.jpg">
+<meta property="og:updated_time" content="2018-12-17T08:59:59.728Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ELO rating system匹配算法">
+<meta name="twitter:title" content="JavaScript Event Loop">
+<meta name="twitter:description" content="JavaScript中的事件循环JS中的事件循环你可能你知道，也可能你不知道，也可能你不知道自己到底知不知道，当然了，不管你知不知道，你每天写的JS代码都离不开这个概念，不管是客户端，还是Node. 我们先看下面的例子 console.log(&amp;apos;Hi&amp;apos;) setTImeout(function(){     console.log(&amp;apos;there&amp;apos;) },50">
+<meta name="twitter:image" content="https://developer.mozilla.org/files/4617/default.svg">
 
 
 
@@ -116,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://loethen.github.io/blog/2018/10/16/ELO-rating-system匹配算法/"/>
+  <link rel="canonical" href="http://loethen.github.io/blog/2018/12/14/JavaScript-Event-Loop/"/>
 
 
 
 
 
-  <title>ELO rating system匹配算法 | litte F and little E</title>
+  <title>JavaScript Event Loop | litte F and little E</title>
   
 
 
@@ -229,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/10/16/ELO-rating-system匹配算法/">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2018/12/14/JavaScript-Event-Loop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
@@ -246,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ELO rating system匹配算法</h1>
+          <h1 class="post-title" itemprop="name headline">JavaScript Event Loop</h1>
         
 
         <div class="post-meta">
@@ -258,8 +265,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:06:10+08:00">
-                2018-10-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-14T15:20:31+08:00">
+                2018-12-14
               </time>
             
 
@@ -296,7 +303,32 @@
       
 
       
-        
+        <h1 id="JavaScript中的事件循环"><a href="#JavaScript中的事件循环" class="headerlink" title="JavaScript中的事件循环"></a>JavaScript中的事件循环</h1><p>JS中的事件循环你可能你知道，也可能你不知道，也可能你不知道自己到底知不知道，<br>当然了，不管你知不知道，你每天写的JS代码都离不开这个概念，不管是客户端，还是Node.</p>
+<p>我们先看下面的例子</p>
+<pre><code>console.log(&apos;Hi&apos;)
+setTImeout(function(){
+    console.log(&apos;there&apos;)
+},5000)
+console.log(&apos;JSConfEU&apos;)
+</code></pre><p>你觉得执行的顺序是怎么样的？</p>
+<p>JavaScript是单线程的编程语言，意思就是同一时间只能做一件事情。老司机和新手司机可能都知道输出顺序，但是你知道为什么是这样吗？再举一个例子，想一下下面的执行顺序是什么呢？</p>
+<pre><code>console.log(&apos;Hi&apos;)
+setTImeout(function(){
+    console.log(&apos;there&apos;)
+},5000)
+console.log(&apos;JSConfEU&apos;)
+</code></pre><p>下面我们来慢慢找到里面的玄机，你离打通任督二脉只差下面这张图。</p>
+<p>先看一下这张图片。里面有几个概念，Heap, Stack, Queue.<br><img src="https://developer.mozilla.org/files/4617/default.svg" alt=""></p>
+<p>我们先把堆放一边，看看什么是栈。</p>
+<h2 id="什么是Stack-栈-？"><a href="#什么是Stack-栈-？" class="headerlink" title="什么是Stack(栈)？"></a>什么是Stack(栈)？</h2><p>每当有一个函数调用，就会将其压入栈顶。在调用结束的时候再将其从栈顶移出。栈的特性是先进后出，后进先出。<br>想一下上面的代码。执行结果应该都是</p>
+<pre><code>Hi
+JSConfEU
+there
+</code></pre><p>到底是怎么做到的呢？再看一下下图。<br><img src="https://wx2.sinaimg.cn/mw690/67963c19gy1fy9uiuk6yhj212w0lg7ca.jpg" alt=""></p>
+<h2 id="什么是Queue-队列"><a href="#什么是Queue-队列" class="headerlink" title="什么是Queue(队列)"></a>什么是Queue(队列)</h2><p>one thread == one call stack == one thing at a time</p>
+<h2 id="什么是Heap-堆"><a href="#什么是Heap-堆" class="headerlink" title="什么是Heap(堆)"></a>什么是Heap(堆)</h2><pre><code>墙裂推荐结尾附录的这个视频Stack Versus Heap，简单明了。
+</code></pre><p>本篇内容来源<br><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">Philip Roberts: What the heck is the event loop anyway? </a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop" target="_blank" rel="noopener">MDN EventLoop</a><br><a href="https://www.youtube.com/watch?v=IX3fDYz0WyM" target="_blank" rel="noopener">Stack Versus Heap</a></p>
+
       
     </div>
     
@@ -311,6 +343,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/blog/tags/eventloop/" rel="tag"># eventloop</a>
+          
+        </div>
+      
 
       
       
@@ -320,8 +358,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/10/16/fish-shuffle洗牌算法/" rel="next" title="fisher-yates shuffle洗牌算法">
-                <i class="fa fa-chevron-left"></i> fisher-yates shuffle洗牌算法
+              <a href="/blog/2018/12/13/puppeteer能做点啥？/" rel="next" title="puppeteer能做点啥？">
+                <i class="fa fa-chevron-left"></i> puppeteer能做点啥？
               </a>
             
           </div>
@@ -330,8 +368,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/12/13/JavaScript-继承和原型链/" rel="prev" title="JavaScript 继承和原型链">
-                JavaScript 继承和原型链 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2018/12/19/宜家一张画背后的故事/" rel="prev" title="宜家一张画背后的故事">
+                宜家一张画背后的故事 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -384,8 +422,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -440,6 +487,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript中的事件循环"><span class="nav-number">1.</span> <span class="nav-text">JavaScript中的事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Stack-栈-？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Stack(栈)？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Queue-队列"><span class="nav-number">1.2.</span> <span class="nav-text">什么是Queue(队列)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Heap-堆"><span class="nav-number">1.3.</span> <span class="nav-text">什么是Heap(堆)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

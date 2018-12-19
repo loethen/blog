@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="深拷贝,浅拷贝," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,13 @@
 
 
 
-<meta name="description" content="js中深复制和浅复制今天忽然想到了这个问题，总结一下js中有哪些复制对象的方法。先得明白什么是深复制，什么是浅复制，举个栗子： var arr = [[1,2],3,4]; var brr = arr.slice();  //这时候brr是arr的浅复制 console.log(brr); 为啥呢？再试试这样： brr[0][1] = 5; console.log(arr)  // result">
-<meta name="keywords" content="深拷贝,浅拷贝">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Javascript deep copy and shallow copy">
-<meta property="og:url" content="http://loethen.github.io/blog/2016/03/15/Javascript-deep-copy-and-shallow-copy/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="litte F and little E">
+<meta property="og:url" content="http://loethen.github.io/blog/page/2/index.html">
 <meta property="og:site_name" content="litte F and little E">
-<meta property="og:description" content="js中深复制和浅复制今天忽然想到了这个问题，总结一下js中有哪些复制对象的方法。先得明白什么是深复制，什么是浅复制，举个栗子： var arr = [[1,2],3,4]; var brr = arr.slice();  //这时候brr是arr的浅复制 console.log(brr); 为啥呢？再试试这样： brr[0][1] = 5; console.log(arr)  // result">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2016-03-15T09:02:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Javascript deep copy and shallow copy">
-<meta name="twitter:description" content="js中深复制和浅复制今天忽然想到了这个问题，总结一下js中有哪些复制对象的方法。先得明白什么是深复制，什么是浅复制，举个栗子： var arr = [[1,2],3,4]; var brr = arr.slice();  //这时候brr是arr的浅复制 console.log(brr); 为啥呢？再试试这样： brr[0][1] = 5; console.log(arr)  // result">
+<meta name="twitter:title" content="litte F and little E">
 
 
 
@@ -120,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://loethen.github.io/blog/2016/03/15/Javascript-deep-copy-and-shallow-copy/"/>
+  <link rel="canonical" href="http://loethen.github.io/blog/page/2/"/>
 
 
 
 
 
-  <title>Javascript deep copy and shallow copy | litte F and little E</title>
+  <title>litte F and little E</title>
   
 
 
@@ -145,7 +140,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -218,9 +214,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -250,7 +246,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Javascript deep copy and shallow copy</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2016/03/15/Javascript-deep-copy-and-shallow-copy/" itemprop="url">Javascript deep copy and shallow copy</a></h1>
         
 
         <div class="post-meta">
@@ -300,7 +298,9 @@
       
 
       
-        <h2 id="js中深复制和浅复制"><a href="#js中深复制和浅复制" class="headerlink" title="js中深复制和浅复制"></a>js中深复制和浅复制</h2><p>今天忽然想到了这个问题，总结一下js中有哪些复制对象的方法。先得明白什么是深复制，什么是浅复制，举个栗子：</p>
+        
+          
+            <h2 id="js中深复制和浅复制"><a href="#js中深复制和浅复制" class="headerlink" title="js中深复制和浅复制"></a>js中深复制和浅复制</h2><p>今天忽然想到了这个问题，总结一下js中有哪些复制对象的方法。先得明白什么是深复制，什么是浅复制，举个栗子：</p>
 <pre><code>var arr = [[1,2],3,4];
 var brr = arr.slice();
 
@@ -378,6 +378,8 @@ var obj2 = Object.assign({}, obj1);
 obj1.a.b = 2;
 obj2.a.b // 2
 </code></pre>
+          
+        
       
     </div>
     
@@ -392,42 +394,14 @@ obj2.a.b // 2
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/blog/tags/深拷贝/" rel="tag"># 深拷贝</a>
-          
-            <a href="/blog/tags/浅拷贝/" rel="tag"># 浅拷贝</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/blog/2016/03/13/JS算法题-生小羊/" rel="next" title="JS算法题 生小羊">
-                <i class="fa fa-chevron-left"></i> JS算法题 生小羊
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2016/03/25/leftpad和按位操作符/" rel="prev" title="left-pad和按位操作符">
-                left-pad和按位操作符 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -437,11 +411,370 @@ obj2.a.b // 2
   </article>
 
 
+    
+      
 
-    <div class="post-spread">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/13/JS算法题-生小羊/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="litte F and little E">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2016/03/13/JS算法题-生小羊/" itemprop="url">JS算法题 生小羊</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-13T20:33:22+08:00">
+                2016-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>面试的时候碰到的问题：</p>
+<blockquote>
+<p>农场里面买了1只小羊，这只小羊第二年和第四年都会生一只小羊，第五年会死掉。生下来的小羊会继续生小羊,问若干年都农场共有多少羊？</p>
+</blockquote>
+<p>这道题的解题思路有两个。<br>先说第一个，使用递归，想想阶乘是怎么实现的？</p>
+<pre><code>function sheepNum(year){
+    var num = 1;
+    for(var i=1; i&lt;=year; i++){
+        if(i==2){
+            num += sheepNum(year - 2);
+        }else if(i==4){
+            num += sheepNum(year - 4);
+        }else if(i==5){
+            num--;
+        }
+    }
+    return num;
+}
+
+sheepNum(10)
+</code></pre><p>说说我的解题思路，把复杂度降低。</p>
+<pre><code>//这是农场
+var farm = [];
+
+//构造一只羊，羊有3个方法，成长，生育，死亡
+function Sheep() {
+  this.age = 0;
+}
+
+Sheep.prototype.grow = function(index,years){
+  for(var i=1; i&lt;=years; i++){
+    //每年都会长1岁
+    this.age++;
+
+    //小羊2岁4岁都会生一只新的小羊    
+    if(this.age == 2 || this.age == 4){
+      //注意这里的参数
+      this.bear(new Sheep(),years-i)
+    }
+
+    if(this.age == 5){
+      //5岁死亡
+      this.die(index);
+      break;
+    }
+  }
+}
+
+Sheep.prototype.bear = function(childSheep,years){
+  //生羊的时候把新生的羊也放进农场。
+  var childIndex = farm.push(childSheep) - 1;
+
+  //小羊继续长大,参数childIndex：羊在农场中的编号，years:此羊离N年还能长几年
+  childSheep.grow(childIndex,years)
+}
+
+Sheep.prototype.die = function(index){
+  //小羊死后移出农场
+  farm.splice(index,1);
+}
+</code></pre><p>这样调用就可以了</p>
+<pre><code>var sheep = new Sheep();
+//羊在羊圈中的位置
+var index = farm.push(sheep) - 1;
+//N年以后的情况
+var years = 40;
+//从第一只羊自己成长就不用管它了。
+sheep.grow(index,years);
+
+//统计农场里面一共几只羊。
+console.log(&apos;total:&apos;+farm.length)
+</code></pre><p>当然你也可以把农场设成number,生小羊number+1，小羊死number-1。<br>这样是不是比递归好理解一点呢？</p>
+
+          
+        
       
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/12/Javascript中的发布订阅/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="litte F and little E">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2016/03/12/Javascript中的发布订阅/" itemprop="url">Javascript中的发布订阅模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-12T14:47:53+08:00">
+                2016-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Javascript中的Publish/Subscribe模式是一种比较经典的模式。消息的发送者叫做publisher,<br>publisher不关心是谁接收了信息，也不用知道是谁接收了消息，只要把信息发出去就可以了。消息的订阅者叫做subscriber，跟publisher类似，subsriber也只关心特定的频道，只接收相关频道的消息，对谁是publisher一无所知。</p>
+<p>核心的代码如下:</p>
+<pre><code>//第一步创建构造函数
+function PubSub() {
+    this.topics = {};
+}
+
+//publish方法，可以接受两个参数，第一个参数是发布的频道，第二个是传给listener的参数
+PubSub.prototype.publish = function(topic,info){
+  if(!this.topics.hasOwnProperty(topic))  return;
+
+  this.topics[topic].forEach(function(listener){
+    listener(info == null ? {} : info);
+  })
+}
+
+//subscribe方法接受两个参数，订阅的频道，和listener函数
+PubSub.prototype.subscribe = function(topic,listener){
+  if(!this.topics.hasOwnProperty(topic)) {
+    this.topics[topic] = [];
+  }
+
+  if(typeof listener != &apos;function&apos;){
+    alert(&apos;无效的listener，必须是一个函数&apos;);
+    return
+  }
+
+  var index = this.topics[topic].push(listener) - 1;
+
+  //注意返回值是一个对象，提供了remove函数，可以用来删除订阅者
+  var topics = this.topics;
+  return {
+    remove: function(){
+      topics[topic].splice(index,1);
+    }
+  }
+}
+</code></pre><p>调用方法：</p>
+<pre><code>var pubsub = new PubSub();
+var sub = pubsub.subscribe(&apos;haha&apos;,function(info){
+  alert(&apos;订阅了haha&apos;+info.hello)
+})
+pubsub.publish(&apos;haha&apos;,{hello:&apos;world&apos;})
+
+//移除这个订阅者
+sub.remove()
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -449,10 +782,6 @@ obj2.a.b // 2
 
 
           
-
-  
-
-
 
         </div>
         
@@ -473,17 +802,8 @@ obj2.a.b // 2
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -538,22 +858,6 @@ obj2.a.b // 2
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js中深复制和浅复制"><span class="nav-number">1.</span> <span class="nav-text">js中深复制和浅复制</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -687,10 +991,6 @@ obj2.a.b // 2
   
 
   
-  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
