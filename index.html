@@ -446,19 +446,24 @@ console.log(&apos;JSConfEU&apos;)
 <pre><code>console.log(&apos;Hi&apos;)
 setTImeout(function(){
     console.log(&apos;there&apos;)
-},5000)
+},5000) 
 console.log(&apos;JSConfEU&apos;)
-</code></pre><p>下面我们来慢慢找到里面的玄机，你离打通任督二脉只差下面这张图。</p>
-<p>先看一下这张图片。里面有几个概念，Heap, Stack, Queue.<br><img src="https://developer.mozilla.org/files/4617/default.svg" alt=""></p>
+</code></pre><p>先看一下这张图片。里面有几个概念，Heap, Stack, Queue.<br><img src="https://developer.mozilla.org/files/4617/default.svg" alt=""></p>
 <p>我们先把堆放一边，看看什么是栈。</p>
-<h2 id="什么是Stack-栈-？"><a href="#什么是Stack-栈-？" class="headerlink" title="什么是Stack(栈)？"></a>什么是Stack(栈)？</h2><p>每当有一个函数调用，就会将其压入栈顶。在调用结束的时候再将其从栈顶移出。栈的特性是先进后出，后进先出。<br>想一下上面的代码。执行结果应该都是</p>
+<h2 id="什么是Stack-栈-？"><a href="#什么是Stack-栈-？" class="headerlink" title="什么是Stack(栈)？"></a>什么是Stack(栈)？</h2><p>每当有一个函数调用，就会将其压入栈顶。在调用结束的时候再将其从栈顶移出。栈的特性是先进后出，后进先出。栈是有序的<br>想一下上面的代码。执行结果应该都是</p>
 <pre><code>Hi
 JSConfEU
 there
-</code></pre><p>到底是怎么做到的呢？再看一下下图。<br><img src="https://wx2.sinaimg.cn/mw690/67963c19gy1fy9uiuk6yhj212w0lg7ca.jpg" alt=""></p>
-<h2 id="什么是Queue-队列"><a href="#什么是Queue-队列" class="headerlink" title="什么是Queue(队列)"></a>什么是Queue(队列)</h2><p>one thread == one call stack == one thing at a time</p>
-<h2 id="什么是Heap-堆"><a href="#什么是Heap-堆" class="headerlink" title="什么是Heap(堆)"></a>什么是Heap(堆)</h2><pre><code>墙裂推荐结尾附录的这个视频Stack Versus Heap，简单明了。
-</code></pre><p>本篇内容来源<br><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">Philip Roberts: What the heck is the event loop anyway? </a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop" target="_blank" rel="noopener">MDN EventLoop</a><br><a href="https://www.youtube.com/watch?v=IX3fDYz0WyM" target="_blank" rel="noopener">Stack Versus Heap</a></p>
+</code></pre><p>到底是怎么做到的呢？再看一下下图。通过以下视频应该就能理解了。</p>
+<iframe frameborder="0" src="https://v.qq.com/txp/iframe/player.html?vid=z08154uppk9" allowfullscreen="true"></iframe>
+
+
+<h2 id="什么是Queue-队列"><a href="#什么是Queue-队列" class="headerlink" title="什么是Queue(队列)"></a>什么是Queue(队列)</h2><p>这里的列队指的是task queue（任务队列），队列也是有序的，先进先出，在当前栈空的情况下，队列中的函数会按加入的先后顺序依次被推到栈中执行。</p>
+<h2 id="什么是Heap-堆"><a href="#什么是Heap-堆" class="headerlink" title="什么是Heap(堆)"></a>什么是Heap(堆)</h2><p>简单的说一下什么是堆，因为这个概念看了一些网上的介绍和维基百科，还是云里雾里的，直到看到一个视频，才对堆和栈有个宏观的了解，下面我简单的描述一下。<br>讲到堆，就必须要拿栈来对比。先看下面这张图<br><img src="http://5b0988e595225.cdn.sohucs.com/images/20171203/c8f51ebcd11a482997cb7ce5e047d827.jpeg" alt="栈"><br>拖鞋排队的现场，拖鞋排的队可以代表栈，旁边随便站的那些无序的人就是堆。栈里面只能存一些primitives value.比如var a = 1, b = 2这样的，因为栈是非常快的，需要的是处理速度，而堆相对很慢，用来存储一些复杂的对象，然后栈里面存在一个pointer指向堆里面的对象。用刚刚拖鞋排队的例子来看，这些拖鞋就是pointer(指针)，当排队排到它的时候，必须要拖鞋的主人过去。</p>
+<p>说到这里，垃圾回收也很好理解了， 垃圾回收是一个释放计算机内存的过程。当对象0引用的时候，就可以被回收了。还拿刚刚的图片举例，如果某个人办完事了，那他不会留在这里，还会把拖鞋穿走。如果某个人站在那里，但是他没放拖鞋在那里排队，那他也会被回收。属于无效资源，还浪费空调。。</p>
+<pre><code>墙裂推荐结尾附录的这个视频Stack Versus Heap，简单明了。
+</code></pre><p>差不多介绍完了，主要是对自己学习的一个总结。</p>
+<p>本篇内容来源<br><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">Philip Roberts: What the heck is the event loop anyway? </a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop" target="_blank" rel="noopener">MDN EventLoop</a><br><a href="https://www.youtube.com/watch?v=IX3fDYz0WyM" target="_blank" rel="noopener">Stack Versus Heap</a></p>
 
           
         
