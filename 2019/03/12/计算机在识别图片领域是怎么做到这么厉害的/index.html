@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。 最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机在识别图片领域是怎么做到这么厉害的">
+<meta property="og:url" content="http://loethen.github.io/blog/2019/03/12/计算机在识别图片领域是怎么做到这么厉害的/index.html">
+<meta property="og:site_name" content="loethen&#39;s blog">
+<meta property="og:description" content="2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。 最">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/12/Screen-Shot-2018-12-18-at-8.53.12-AM-640x319.png">
+<meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/08/tikz12-1.png">
+<meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/08/MnistExamples.png">
+<meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/10/seven.png">
+<meta property="og:updated_time" content="2019-03-14T07:53:44.637Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机在识别图片领域是怎么做到这么厉害的">
+<meta name="twitter:description" content="2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。 最">
+<meta name="twitter:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/12/Screen-Shot-2018-12-18-at-8.53.12-AM-640x319.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://loethen.github.io/blog/2019/03/12/计算机在识别图片领域是怎么做到这么厉害的/"/>
+
+
+
+
+
+  <title>计算机在识别图片领域是怎么做到这么厉害的 | loethen's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">loethen's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">养猫写码 meow and code</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/03/12/计算机在识别图片领域是怎么做到这么厉害的/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="loethen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机在识别图片领域是怎么做到这么厉害的</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-12T10:26:17+08:00">
+                2019-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2012年一篇里程碑式的论文改变了软件识别图片的方式。</p>
+<p>现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。</p>
+<p>最近几年，研究人员发现随着他们建立深度网络，并使用大量的数据训练她们，软件的识别准确性越来越高了。这也创造了对计算机能力几乎无法满足的胃口，提升了哪些GPU厂商的财富，例如Nvidia,AMD。谷歌几年以前，就开发了自己的定制神经网络芯片，其他公司也积极的跟进。</p>
+<p>举个例子，在特斯拉，公司请到了深度学习专家Andrej Karpathy负责公司的自动驾驶项目。特斯拉正在开发自己的芯片，来为下一代的自动驾驶加速神经网络运算。另一个例子， 在苹果公司，A11和A12芯片在最近的iPhone的核心中都包含了“神经引擎”，用来加速神经网络运算。以此提供更好的图片和声音识别应用。</p>
+<p>这篇文章中我与之交谈的专家，将当期深度学习热潮追溯到一篇特定的论文，绰号AlexNet，论文的主要作者Alex Krizhevsky.</p>
+<p>“在我的印象中，2012年是里程碑式的一年，当AlexNet的论文出来以后”，机器学习的专家Sean Gerrish说。</p>
+<p>回到2012年，在机器学习领域，深度神经网络其实是某种意义上的“回水”（我的理解是之前也有人研究，但是效果不理想），但是当时Krizhevsky和他的多伦多大学同事在一个图片识别竞赛上，高调的提交了一个作品，显著的比之前所有开发的都要精确。几乎隔夜，深度神经网络变成了图片领域的前沿技术。其他的研究人员利用这个技术很快的证明了图像识别准确性的进一步飞跃。</p>
+<p>在这篇文章中，我们将深入的挖掘深度学习，我将要解释什么是神经网络，怎样训练他们，为什么他们需要如此多的计算能力。另外，我讲解释为什么一个特殊的神经网络类型–深度，卷积网络–在识别图片方面如此的优秀。不用担心，下面会有很多图片。</p>
+<h2 id="单神经元的简单例子"><a href="#单神经元的简单例子" class="headerlink" title="单神经元的简单例子"></a>单神经元的简单例子</h2><p>可能你对“神经网络”这个词，会感到有一丝的困惑。让我们以一个简单的例子开始吧。假设你想要用神经网络来决定一辆车是否能够通过红绿灯。一个单神经元的神经网络应该能完成这个任务。<br><img src="https://cdn.arstechnica.net/wp-content/uploads/2018/12/Screen-Shot-2018-12-18-at-8.53.12-AM-640x319.png" alt=""></p>
+<p>神经元取每次的输入（1 表示打开,0 表示关闭),和它关联的权重相乘，并将所有加权值相加。然后神经元再加上偏差值，得到的结果决定神经元“激活”的阈值。在这种情况下，如果输出值是正的，我们假设神经元已经”fired”（不知道怎么翻，有点像开火，点火，激活之类的意思吧）,否则我们不会。这个神经元等于一下的不等式“绿 - 红 - 0.5 &gt; 0”,如果这个不等式结果为true,意味着绿灯亮了，红灯灭了，车可以通过。</p>
+<p>在真正的神经网络里面，人工的神经元要经过额外的一个步骤。在取加权值之和，再加上偏差值以后，要调用一个非线性的激活函数，一个比较流行的选择是sigmoid function,  一个<a href="https://en.wikipedia.org/wiki/Sigmoid_function" target="_blank" rel="noopener">S-shaped function</a>总是产生（0,1）之间的值.</p>
+<p>这个使用的激活函数不会改变我们这个简单的红绿灯模型的结果（除了我们需要使用0.5而不是0的阈值）。但是激活函数的非线性对于使神经网络能够模拟更复杂的函数至关重要，如果没有非线性激活函数，每个神经网络，不管多复杂，都可以简化其输入的线性组合。然而，一个线性函数是没法模拟复杂的真实世界的现象。非线性激活函数使得神经网络能够近似任何数学函数成为可能。</p>
+<h2 id="一个神经网络的例子"><a href="#一个神经网络的例子" class="headerlink" title="一个神经网络的例子"></a>一个神经网络的例子</h2><p>有很多的方法来近似函数，当然，神经网络的特殊之处在于我们知道如何使用一些微积分知识，大量的数据，还有大量的计算<br>能力来训练它们。我们可以构建一个通用的神经网络，而不是让一个人类程序员为了特定的任务而设计一个神经网络。通过观察大量带标签的示例，然后修改神经网络，以使它能够为已标记的示例产生尽可能多正确的标签。最后希望的结果是这个网络能够为哪些没在训练集里面的示例数据归纳，产生正确的标签。</p>
+<p>到达这一点的过程在AlexNet之前就开始了。 1986年，三位研究人员发表了一篇关于反向传播的具有里程碑意义的论文，这种技术有助于使其在数学上易于训练复杂的神经网络。</p>
+<p>为了有一个直观的了解，让我们看一下<a href="http://neuralnetworksanddeeplearning.com/chap1.html" target="_blank" rel="noopener">Michael Nielsen</a>在他出色的在线深度学习教科书中展示的简单的神经网络。这个神经网络的目标是，取一个28*28像素的图片来表示一个手写的数字，正确的认出这个数字是0，1，2等等。</p>
+<p>每张图片有28*28=784个输入值，每个值在0和1之间，代表像素的明暗程度。Nielsen构建了一个神经网络，像下面这样：</p>
+<p><img src="https://cdn.arstechnica.net/wp-content/uploads/2018/08/tikz12-1.png" alt=""></p>
+<p>在这张图片中，中间和右边的每一个圆圈代表一个神经元，就像我们在上面章节看到的那样。每个神经元对其输入进行加权平均，添加偏差值，然后应用激活函数。注意左边的圆圈不是代表神经元，这些圆圈代表这个网络的输入值。虽然图像仅显示8个输入圆，但实际上有784个输入 - 输入图像中的每个像素一个。</p>
+<p>右边的10个神经元表示为不同的数字“亮灯”，当输入的图片是手写的0，第一个神经元会“亮灯”，以此类推。</p>
+<p>每个神经元从它之前层级的每个神经元获取输入，所以中间层中15个神经元中每个神经元都有784个输入值，这15个神经元中的每一个都有相对应784个输入值的权重参数，这就意味着这一层有单独的15x784=11760个权重参数。相似的，输出层包含10个神经元，每个神经元都从中间层的15个神经元中获取输入值，增加另外的15x10=150个权重参数，最重要的是，这个网络还有25个偏差值-这25个神经元每个都有。</p>
+<h2 id="训练这个神经网络"><a href="#训练这个神经网络" class="headerlink" title="训练这个神经网络"></a>训练这个神经网络</h2><p>训练的目标是调整这11935个参数，最大化的使那个代表正确数字的，输出层的神经元亮灯。我们可以用那个很出名的数据集<a href="https://en.wikipedia.org/wiki/MNIST_database" target="_blank" rel="noopener">MNIST</a>,它提供了60000个打了标签的28*28像素的图片：<br><img src="https://cdn.arstechnica.net/wp-content/uploads/2018/08/MnistExamples.png" alt=""><br>This image shows 160 of the 60,000 images in the MNIST dataset.</p>
+<p>Nielsen展示了如何训练这个网络，而仅仅使用了74行常规的Python代码–不需要特别的机器学习库。训练以选择这11935个参数和偏差开始。然后软件会查看示例图片，为每张图片完成以下两个处理步骤：</p>
+<pre><code>* 前馈步骤 给定输入图片和网络当前的参数，计算网络的输出值
+* 反向传播步骤 计算结果偏离正确的输出值有多少，然后修改网络的参数，以略微提升在特定图片上的表现。
+</code></pre><p>下面举个栗子，假设网络显示了这张图片<br><img src="https://cdn.arstechnica.net/wp-content/uploads/2018/10/seven.png" alt=""></p>
+<p>如果网络已经校准了，那网络中输出层代表”7“的神经元应该趋近于1，其他的应该趋近于0。但是出乎意料的是，当展示这张图片的时候，代表”0“的神经元趋近于0.8，这太高了！这个训练算法应该调整”0“的输入权重，使得下次能够让它趋于0。</p>
+<p>为此，反向传播算法计算每个输入权重参数的误差梯度。作为一个衡量标准，对于给定的一个输入权重值的变化，所引起的输出值的误差变化的一个衡量标准，算法使用这个梯度来决定需要改变每个输入权重值的程度。梯度越大，需要改变的参数越多。</p>
+<p>换句话说，训练程序”教”输出层的神经元，不要把注意力放在那些朝错误方向的输入值上（这里指中间层的神经元），而是多关注那些能够朝正确的输入值方向上。</p>
+<p>该算法针对每个其他输出层神经元重复该步骤。它减少了“1”，“2”，“3”，“4”，“5”，“6”，“8”和“9”神经元（但不是“7”神经元）的输入权重将这些输出神经元的值向下推</p>
+<p>原文地址 <a href="https://arstechnica.com/science/2018/12/how-computers-got-shockingly-good-at-recognizing-images/" target="_blank" rel="noopener">How computers got shockingly good at recognizing images</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/12/19/宜家一张画背后的故事/" rel="next" title="宜家一张画背后的故事">
+                <i class="fa fa-chevron-left"></i> 宜家一张画背后的故事
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog/images/cat.png"
+                alt="loethen" />
+            
+              <p class="site-author-name" itemprop="name">loethen</p>
+              <p class="site-description motion-element" itemprop="description">frontend javascript 前端 js cat</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单神经元的简单例子"><span class="nav-number">1.</span> <span class="nav-text">单神经元的简单例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个神经网络的例子"><span class="nav-number">2.</span> <span class="nav-text">一个神经网络的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练这个神经网络"><span class="nav-number">3.</span> <span class="nav-text">训练这个神经网络</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">loethen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

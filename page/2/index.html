@@ -232,6 +232,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/25/leftpad和按位操作符/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="loethen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2016/03/25/leftpad和按位操作符/" itemprop="url">left-pad和按位操作符</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-25T20:53:33+08:00">
+                2016-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这两天Npm leftpad的新闻真是挺火的，详情<a href="http://www.businessinsider.com/npm-left-pad-controversy-explained-2016-3" target="_blank" rel="noopener">点这里</a>了解，来龙去脉就不讲了，跟本文也没有太大的关系。这篇文章主要想说一说我们很少用到的<em>位操作符</em>，然而位操作符跟这件事情有什么关系呢？</p>
+<p>这要从leftpad的用处说起。leftpad这个模块起一个很简单的作用，从左边补位。看示例代码</p>
+<pre><code>leftpad(&apos;foo&apos;, 5)
+// =&gt; &quot;  foo&quot; 
+
+leftpad(&apos;foobar&apos;, 6)
+// =&gt; &quot;foobar&quot; 
+
+leftpad(1, 2, 0)
+// =&gt; &quot;01&quot; 
+</code></pre><h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><pre><code>第一个参数是字符串，
+第二个参数是字符串的长度，
+第三个参数是补位的字符串默认是空字符串。
+</code></pre><h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><pre><code>function leftpad(str,len,ch){
+    if(!ch &amp;&amp; ch!==0){
+        ch = &apos; &apos;
+    }
+
+    var count = len - str.length;
+
+    if(count&lt;0) return str;
+
+    var rpt = &apos;&apos;;
+
+    for(;;){
+        //count为奇数的时候执行，其实只要count为1执行就可以了，这样写我认为是为了速度更快
+        if(count &amp; 1) rpt += ch ;
+
+        //无符号右移。代码的core所在
+        count &gt;&gt;&gt;= 1;
+
+        if(count == 0) break;
+        ch += ch
+    }
+
+    return rpt + str;
+}
+</code></pre><p>注意for循环里面的代码。因为位操作符是比较少用，正好复习一下。<br>for循环里并不关心count的值是几，而是每次循环按位向右移动，只要判断值是否等于0，也就是右移到边界(二进制里面所有的1都移走了)。<br>按位操作符为什么比较快，因为位运算直接对内存数据进行操作，不需要转成十进制，因此处理速度非常快。</p>
+<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><p>按位操作可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators#.26_(.E6.8C.89.E4.BD.8D.E4.B8.8E" target="_blank" rel="noopener">MDN上的文档</a>)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/15/Javascript-deep-copy-and-shallow-copy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -825,7 +983,7 @@ sub.remove()
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -875,7 +1033,7 @@ sub.remove()
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
