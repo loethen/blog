@@ -232,6 +232,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/31/javascript数组中的各种循环和返回值/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="loethen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2016/03/31/javascript数组中的各种循环和返回值/" itemprop="url">javascript数组中的各种循环和返回值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-31T12:19:03+08:00">
+                2016-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给自己总结一下，循环比较多容易弄混了。</p>
+<h2 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h2><p>Array.forEach(callback)</p>
+<pre><code>callback参数(value,index,array)
+</code></pre><p>没有返回值，对数组的所有元素执行一遍callback</p>
+<h2 id="for-of"><a href="#for-of" class="headerlink" title="for of"></a>for of</h2><pre><code>for (variable of iterable) {
+  statement
+}
+</code></pre><p>没有返回值，对可循环的对象(包括Array,Map,Set,String,arguments)执行statement</p>
+<p><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">MDN</a></p>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>数组的map函数返回一个新的数组</p>
+<pre><code>arr.map(callback[, thisArg])
+</code></pre><p>callback有三个参数  (value, index ,array)</p>
+<h2 id="every"><a href="#every" class="headerlink" title="every"></a>every</h2><p>数组的every函数测试是否所有的元素都能通过provided function的测试</p>
+<pre><code>arr.every(callback[, thisArg])
+</code></pre><p>callback参数 (value index array)</p>
+<h3 id="thisArg"><a href="#thisArg" class="headerlink" title="thisArg"></a>thisArg</h3><p>Optional. Value to use as this when executing callback.</p>
+<pre><code>function isBigEnough(element, index, array) {
+  return element &gt;= 10;
+}
+[12, 5, 8, 130, 44].every(isBigEnough);   // false
+[12, 54, 18, 130, 44].every(isBigEnough); // true
+</code></pre><p>返回值是boolean</p>
+<h2 id="数组推导（array-comprehension）"><a href="#数组推导（array-comprehension）" class="headerlink" title="数组推导（array comprehension）"></a>数组推导（array comprehension）</h2><pre><code>var a1 = [1, 2, 3, 4];
+var a2 = [for (i of a1) i * 2];
+
+a2 // [2, 4, 6, 8]
+</code></pre><p>允许直接通过现有数组生成新数组。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/25/leftpad和按位操作符/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -983,7 +1129,7 @@ sub.remove()
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

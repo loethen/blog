@@ -232,6 +232,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/03/20/进程和线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="loethen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/03/20/进程和线程/" itemprop="url">理解线程和进程的关系</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-20T13:30:05+08:00">
+                2019-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>探索并发的世界，一次一步。</p>
+<p>得利于硬件的进步和更智能的操作系统，现代计算机都有能力同时执行多个操作。就执行和响应速度而言，计算机的这个特性使你的程序运行的更快。</p>
+<p>编写利用这种能力的软件，是如此的吸引人。但是棘手的是，它需要你了解你的计算机在执行的时候，到底发生了什么。在第一章中，我将试着揭开线程的面纱，线程是操作系统提供的工具之一，用来执行这种有”魔力“的操作，让我们开始吧！</p>
+<h2 id="进程和线程：用正确的方法命名"><a href="#进程和线程：用正确的方法命名" class="headerlink" title="进程和线程：用正确的方法命名"></a>进程和线程：用正确的方法命名</h2><p>现代操作系统可以同时运行多个程序。这就是为什么你能在浏览器里看这篇文章的同时，又能用音乐播放器听音乐。我们知道每个被执行的程序被称为一个进程。操作系统可以利用底层硬件，和一些软件的技巧来使每个进程独立于其他进程运行。无论是哪种方式，最终的结果就是你感觉你的程序都在同时运行。</p>
+<p>运行进程不是操作系统同时执行数个操作的唯一方式，每个进程的内部，可以同时运行多个子任务，这些子任务称为线程。你可以想象一下，一个线程就是一个进程的切片。在进程开始运行的时候，内部至少触发一个线程，这个线程称为主线程。然后根据程序或者程序员的需要，可以额外增加或结束其他线程。<strong>多线程</strong>就是在一个进程内部运行多个线程。</p>
+<p>举个栗子，就像你的音乐播放器就是多线程，一个主线程用来渲染界面，另一个线程用来播放音乐或其他等等操作。。</p>
+<p>你可以把操作系统当成一个容器，这个容器里面盛满了进程，每个进程里面又含有很多线程。这篇文章仅仅关注线程，但是这整个话题是如此的吸引人，以后值得更深入的分析。<br><img src="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/processes-threads.png" alt=""></p>
+<h2 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h2><p>每个进程都有自己的内存块，这个是操作系统分配的。默认这个内存不能和其他进程共享，你的浏览器没有权限访问你音乐播放器的内存，反之亦然。同样的，如果你打开浏览器两次，那是两个独立的进程，有不同的内存区域。所以默认的，两个进程没办法分享数据，除非他们执行一个高级的技巧–IPC(inter-process communication)</p>
+<p>跟进程不一样， 线程共享操作系统分配给他们所属进程的内存块。你音乐播放器的界面数据是可以容易的被音频引擎访问的，反之亦然。最重要的是，比起进程，线程是很轻量级的，他们消耗很少的资源，创建起来很快，这就是为什么它们又被称为<strong>轻量级的进程</strong></p>
+<h2 id="Green-threads-of-fibers"><a href="#Green-threads-of-fibers" class="headerlink" title="Green threads, of fibers"></a>Green threads, of fibers</h2><p>当前提到的线程，都是操作系统层面的事情：一个进程需要出发线程，只能与操作系统通信。但是不是每一个平台都原生的支持线程。所以<strong>绿色线程</strong>也被称为<strong>纤维</strong>，就是这种情况下，多线程的一个替代品。比如一个虚拟机就可能实行绿色线程，因为底层操作系统不支持原生的线程。</p>
+<p>在运行层面上，创建和管理绿色线程是非常快的，因为它的实现绕过了操作系统。但是也有缺点，我们将在下一篇文章中讨论。</p>
+<p><strong>绿色线程</strong>名字来源与Sun公司的绿色团队（Green Team),是90年代原生Java线程库的设计师。现在，Java不再使用绿色线程了，他们在2000年又转到原生线程上了。其他一些编程语言– Go, Haskell, Rust等都实现了自己的绿色线程。</p>
+<h2 id="线程能用来做什么"><a href="#线程能用来做什么" class="headerlink" title="线程能用来做什么"></a>线程能用来做什么</h2><p>为什么进程需要雇佣多个线程？就像我前面提到的，同时做很多事情，能够极大的提高做事情的效率。就说你在影片编辑器里渲染一部电影，这个编辑器应该足够智能的在多个线程间传递渲染操作，每个线程都处理整个影片中的一段。所以当只有一个线程可以用的时候，可能要花一个小时，2个线程的话30分钟，4个线程的话，15分钟。</p>
+<p>真的这么简单？还有3个重要的点需要考虑：</p>
+<ul>
+<li>不是每个程序都需要使用多线程，如果你的应用是处理有序（串联）的操作，或者经常需要等待用户的响应，多线程可能不是那么适合。</li>
+<li>你只是没有抛出更多线程让你的程序运行的跟快，每个子任务都要小心的考虑和设计它们的并行操作。</li>
+<li>线程在真正的并发下并不不能100%保证正确的处理它们的操作。这取决于底层的硬件。</li>
+</ul>
+<p>最后一条是很关键的。如果你的计算机不支持多线程的同时操作，操作系统必须模拟它。让我们用1分钟的时间看看是如何做的，假设<strong>并发</strong>（concurrency）是我们的一种感知，就是有多个任务在同时处理，而<strong>真正的并行</strong>(parallelism)是同时处理的任务。</p>
+<p><img src="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/concurrency-parallelism.png" alt=""></p>
+<h2 id="是什么使并发和并行成为可能"><a href="#是什么使并发和并行成为可能" class="headerlink" title="是什么使并发和并行成为可能"></a>是什么使并发和并行成为可能</h2><p>电脑里的CPU做了运行程序的最艰苦的工作，它包含以下几个部分，最主要的成为<strong>核心</strong>，这是计算真正执行的地方。一个核心同一时间只能做一个操作。</p>
+<p>这当然是一个主要的缺点。基于这个原因，操作系统又开发了高级的技术，使用户有能力同时运行多进程（或线程），尤其是在图形环境中。<br>即使是单核的机器。其中最重要的一个技术称为<strong>抢先式多任务处理</strong>（preemptive multitasking），就是打断正在执行的任务，转换到另一个任务上，过一会再转回来，</p>
+<p>所以，当你的计算机只有单核的时候，操作系统的部分任务就是传播这个单核的算力，跨越多个进程或线程。循环执行他们中的一个到另一个。这个操作会给你一种错觉，让你感觉好像多个程序在同时执行，或者一个程序同时做了多件事情。我们已经讲到了并发，但真正的并行–能够同时运行多个进程，还没讲到。</p>
+<p>如今现代的CPU都有多个核心，每一个都可以同时执行一个独立的操作，这就意味着真正的并发成为可能。比如我我的inter core i7 有4个核心，它能同时处理4个进程或线程。</p>
+<p>操作系统能够探测到CPU的数量，然后给它们分配进程或者线程。线程可能分配给操作系统喜欢的任何核心，这种类型的调度对你的程序来说是完全透明的，另外，如果所有核心都在忙的话，抢先式多任务处理就应该起作用了。这就给你了机会，来运行比你计算机真正核心数多的进程和线程。</p>
+<h2 id="单核心运行多线程程序，真的有意义吗？"><a href="#单核心运行多线程程序，真的有意义吗？" class="headerlink" title="单核心运行多线程程序，真的有意义吗？"></a>单核心运行多线程程序，真的有意义吗？</h2><p>真正的并行在单核机器上是不可能实现的。如果你的程序能够受益于多线程，那写一个多线程的程序还是有意义的。当程序使用多线程的情况下，抢先式多任务处理能够保证你的应用正常运行，即使其中有个线程在执行很慢，或是闭塞的任务。</p>
+<p>举个栗子，你在开发一个桌面应用，从一个很慢的硬盘里面读数据，如果你写的程序是单线程的，整个app会冻结，直到硬盘的操作完成，在等待磁盘唤醒时浪费了分配给唯一线程的CPU功率，当然，操作系统除此之外还运行许多其他进程，但你的应用程序不会取得任何进展。</p>
+<p>让我们重新考虑一下你的应用程序，如果改成多线程呢？ 线程A用来访问硬盘，同时线程B负责主要的界面。当线程A因为硬盘原因被卡住的时候，线程B仍然能够运行主要的用户界面，保持你的程序正常响应。当你有两个线程的时候，操作系统可以让CPU资源在它们之前转换，而不是卡在慢的那个上面。</p>
+<h2 id="线程更多，问题更多"><a href="#线程更多，问题更多" class="headerlink" title="线程更多，问题更多"></a>线程更多，问题更多</h2><p>我们知道，线程共享它们父进程的内存块，这就使得多个线程可以很容易的互相交换数据，在同一个应用内。举个例子，一个电影编辑器可能占用含有视频时间轴的一大部分共享内存，而这里共享的内存又可以被他的多个工作线程读取，这里的线程被设计用来渲染影片，并导出到硬盘文件。它们只需要一个到内存区块的指针，用来读取然后输出渲染的帧到硬盘。</p>
+<p>只要两个或多个线程都从相同的内存位置读取数据，事情就能顺利的进行。But,注意这个but,让至少一个线程往内存里面写数据，而同时多个其他线程在读数据，问题就来了，这里有两个问题：</p>
+<ul>
+<li><strong>数据竞赛</strong> – 让一个线程在执行写操作，而一个现在在执行读操作，如果这时候，写还没完成，那读肯定会得到一个坏的数据。</li>
+<li><strong>竞赛条件</strong> – 读操作应该在写操作完成之后。但是如果相反的情况会发生什么？比数据竞赛更微妙的是，当两个或多个线程以不可预期的顺序做他们的工作，而实际上这些操作应该以特定的顺序执行，你的程序就会触发一个竞赛条件。</li>
+</ul>
+<h2 id="线程安全的概念"><a href="#线程安全的概念" class="headerlink" title="线程安全的概念"></a>线程安全的概念</h2><p>一段代码如果能正常工作，被称之为线程安全，也就是没有数据竞赛或者竞赛条件，尽管许多线程在同步执行。你可能已经注意到一些编程库声称自己是线程安全的：如果你在写多线程的程序，你希望确保任何其他的第三方函数能够跨线程正确的调用，而不触发并发问题。</p>
+<h2 id="数据竞赛的根本原因"><a href="#数据竞赛的根本原因" class="headerlink" title="数据竞赛的根本原因"></a>数据竞赛的根本原因</h2><p>我们知道CPU核心同一时间只能执行一条机器指令，这种指令被称为<strong>原子</strong>操作，因为它不能再分解：不能再分解成更小的操作。</p>
+<p>这种不能分割的特性使得原子操作自带线程安全。当一个原子在执行写操作的时候，其他线程是不可能读完成一半的数据的。反过来，当一个线程在执行一个原子读操作的时候，肯定是读的当时完整的数据。对一个线程来说，是不可能遗漏原子操作的，所以不可能发生数据竞赛。</p>
+<p>坏消息是，绝大部分的操作都不是原子操作。就是一个小小的赋值语句 <code>x = 1</code>,在一些硬件上都可能是多个原子机器指令的组合。使得赋值本身变成非原子操作。所以在赋值的时候，如果一个线程在读<code>x</code>的值，那就会触发数据竞赛。</p>
+<h2 id="竞赛条件的根本原因"><a href="#竞赛条件的根本原因" class="headerlink" title="竞赛条件的根本原因"></a>竞赛条件的根本原因</h2><p>抢先式多任务处理使操作系统能够完成的控制进程管理。通过高级的调度算法，它能开始，停止或者暂停线程。你作为一个程序员，是不能控制执行的时间和顺序的。实际上，像下面这样的代码是没有保护的</p>
+<pre><code>writer_thread.start()
+reader_thread.start()
+</code></pre><p>这段代码将以特定的顺序，开始两个进程。运行几次你将会注意到，每次运行的行为都不一样：有时writer线程先开始，有时候reader线程先开始，如果你的程序需要writer线程总是先执行，那你肯定会触发竞赛条件。</p>
+<p>这种行为称为 <strong>非确定性</strong> ：你不能预测到每次执行的顺序。在debug由竞赛条件引起的错误的时候，会让人很恼火，因为你不能每次都重现这个错误。</p>
+<h2 id="教会线程相处：-并发控制"><a href="#教会线程相处：-并发控制" class="headerlink" title="教会线程相处： 并发控制"></a>教会线程相处： 并发控制</h2><p>数据竞赛和竞赛条件都是现实中会遇到的问题。容纳两个或多个并发线程的技术称为<strong>并发控制</strong>，操作系统和编程语言提供了好几种方案来处理它。</p>
+<ul>
+<li><p>同步 – 确保资源同一时间只能被一个线程使用。同步是将代码的特定部分标记为“受保护”，以便两个或多个并发线程不会同时执行它，从而搞砸了你的共享数据;</p>
+</li>
+<li><p>原子操作 – 一堆的非原子操作（像前面提到的赋值）通过操作系统提供的特殊指令，可以被转化为原子操作。用这种方法，共享的数据总会保持有效的状态，不管其他的线程以何种方式访问它。</p>
+</li>
+<li><p>不可变数据 – 共享的数据标记为不可变状态。线程只允许读，从根本上解决问题。我们知道，如果是只读的话，访问相同的内存地址里面的数据是安全的。这也是<a href="https://en.wikipedia.org/wiki/Functional_programming" target="_blank" rel="noopener">函数编程</a>里面的主要哲学。</p>
+</li>
+</ul>
+<p>翻译自<a href="https://www.internalpointers.com/post/gentle-introduction-multithreading" target="_blank" rel="noopener">A gentle introduction to multithreading</a></p>
+<p>单词</p>
+<p><a href="https://www.quora.com/What-does-under-the-hood-mean-in-programming" target="_blank" rel="noopener">“under the hood”</a></p>
+<p>fiber: <a href="https://en.wikipedia.org/wiki/Fiber_(computer_science" target="_blank" rel="noopener">In computer science, a fiber is a particularly lightweight thread of execution.
+</a>)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/03/12/计算机在识别图片领域是怎么做到这么厉害的/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -303,9 +480,10 @@
       
         
           
-            <p>2012年一篇里程碑式的论文改变了软件识别图片的方式。</p>
-<p>现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。</p>
-<p>最近几年，研究人员发现随着他们建立深度网络，并使用大量的数据训练她们，软件的识别准确性越来越高了。这也创造了对计算机能力几乎无法满足的胃口，提升了哪些GPU厂商的财富，例如Nvidia,AMD。谷歌几年以前，就开发了自己的定制神经网络芯片，其他公司也积极的跟进。</p>
+            <p>本文翻译自<a href="https://arstechnica.com/science/2018/12/how-computers-got-shockingly-good-at-recognizing-images/" target="_blank" rel="noopener">How computers got shockingly good at recognizing images</a></p>
+<p>2012年一篇里程碑式的论文改变了软件识别图片的方式。</p>
+<p>现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件以一种复杂的方法”理解”这张图片，在这之前的技术是不可能做到的。</p>
+<p>最近几年，研究人员发现随着他们建立深度网络，并使用大量的数据训练她们，软件的识别准确性越来越高了。这也创造了对计算机能力几乎无法满足的胃口，提升了那些GPU厂商的财富，例如Nvidia, AMD。谷歌几年以前，就开发了自己的定制神经网络芯片，其他公司也积极的跟进。</p>
 <p>举个例子，在特斯拉，公司请到了深度学习专家Andrej Karpathy负责公司的自动驾驶项目。特斯拉正在开发自己的芯片，来为下一代的自动驾驶加速神经网络运算。另一个例子， 在苹果公司，A11和A12芯片在最近的iPhone的核心中都包含了“神经引擎”，用来加速神经网络运算。以此提供更好的图片和声音识别应用。</p>
 <p>这篇文章中我与之交谈的专家，将当期深度学习热潮追溯到一篇特定的论文，绰号AlexNet，论文的主要作者Alex Krizhevsky.</p>
 <p>“在我的印象中，2012年是里程碑式的一年，当AlexNet的论文出来以后”，机器学习的专家Sean Gerrish说。</p>
@@ -332,6 +510,8 @@
 <p>为此，反向传播算法计算每个输入权重参数的误差梯度。作为一个衡量标准，对于给定的一个输入权重值的变化，所引起的输出值的误差变化的一个衡量标准，算法使用这个梯度来决定需要改变每个输入权重值的程度。梯度越大，需要改变的参数越多。</p>
 <p>换句话说，训练程序”教”输出层的神经元，不要把注意力放在那些朝错误方向的输入值上（这里指中间层的神经元），而是多关注那些能够朝正确的输入值方向上。</p>
 <p>该算法针对每个其他输出层神经元重复该步骤。它减少了“1”，“2”，“3”，“4”，“5”，“6”，“8”和“9”神经元（但不是“7”神经元）的输入权重将这些输出神经元的值向下推</p>
+<p>plus: 文章没翻译完，一是太长了，二是这里的数学知识不太了解，等我入门机器学习以后，再继续翻译吧。有英文基础的建议看原文，虽然可能有些数学原理看不懂，但是还是能大概理解什么是机器学习。</p>
+<p><a href="https://classroom.udacity.com/courses/ud187" target="_blank" rel="noopener">Udacity免费课程</a><br><a href="https://developers.google.cn/machine-learning" target="_blank" rel="noopener">Google tensorflow 免费课程</a></p>
 <p>原文地址 <a href="https://arstechnica.com/science/2018/12/how-computers-got-shockingly-good-at-recognizing-images/" target="_blank" rel="noopener">How computers got shockingly good at recognizing images</a></p>
 
           
@@ -463,7 +643,7 @@
 <p><img src="https://wx4.sinaimg.cn/mw690/67963c19gy1fyc326nafrj20xk0p54qp.jpg" alt=""><br><img src="https://ws3.sinaimg.cn/mw690/67963c19gy1fyc32k08b8j20zd0q14qp.jpg" alt=""><br><img src="https://ws1.sinaimg.cn/mw690/67963c19gy1fyc32rrhjxj20zg0pb1kx.jpg" alt=""><br><img src="https://wx4.sinaimg.cn/mw690/67963c19gy1fyc32z1d6xj20oz0nqtsy.jpg" alt=""></p>
 <p>现在它被挂在全世界各个地方。</p>
 <p>有兴趣的可以自己看看原文 <a href="https://petapixel.com/2018/11/20/the-story-behind-that-ikea-photo-of-amsterdam/" target="_blank" rel="noopener">https://petapixel.com/2018/11/20/the-story-behind-that-ikea-photo-of-amsterdam/</a> </p>
-<p>plus: 写文章真的是不容易，这篇文章前前后后大概花了2个小时吧。</p>
+<p>plus: 翻译文章不容易啊，这篇文章前前后后大概花了2个小时吧。</p>
 
           
         
@@ -1494,152 +1674,6 @@ app = create_app(os.getenv(&apos;CONFIG&apos;) or &apos;default&apos;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/31/javascript数组中的各种循环和返回值/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="loethen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/cat.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="loethen's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2016/03/31/javascript数组中的各种循环和返回值/" itemprop="url">javascript数组中的各种循环和返回值</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-31T12:19:03+08:00">
-                2016-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给自己总结一下，循环比较多容易弄混了。</p>
-<h2 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h2><p>Array.forEach(callback)</p>
-<pre><code>callback参数(value,index,array)
-</code></pre><p>没有返回值，对数组的所有元素执行一遍callback</p>
-<h2 id="for-of"><a href="#for-of" class="headerlink" title="for of"></a>for of</h2><pre><code>for (variable of iterable) {
-  statement
-}
-</code></pre><p>没有返回值，对可循环的对象(包括Array,Map,Set,String,arguments)执行statement</p>
-<p><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">MDN</a></p>
-<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>数组的map函数返回一个新的数组</p>
-<pre><code>arr.map(callback[, thisArg])
-</code></pre><p>callback有三个参数  (value, index ,array)</p>
-<h2 id="every"><a href="#every" class="headerlink" title="every"></a>every</h2><p>数组的every函数测试是否所有的元素都能通过provided function的测试</p>
-<pre><code>arr.every(callback[, thisArg])
-</code></pre><p>callback参数 (value index array)</p>
-<h3 id="thisArg"><a href="#thisArg" class="headerlink" title="thisArg"></a>thisArg</h3><p>Optional. Value to use as this when executing callback.</p>
-<pre><code>function isBigEnough(element, index, array) {
-  return element &gt;= 10;
-}
-[12, 5, 8, 130, 44].every(isBigEnough);   // false
-[12, 54, 18, 130, 44].every(isBigEnough); // true
-</code></pre><p>返回值是boolean</p>
-<h2 id="数组推导（array-comprehension）"><a href="#数组推导（array-comprehension）" class="headerlink" title="数组推导（array comprehension）"></a>数组推导（array comprehension）</h2><pre><code>var a1 = [1, 2, 3, 4];
-var a2 = [for (i of a1) i * 2];
-
-a2 // [2, 4, 6, 8]
-</code></pre><p>允许直接通过现有数组生成新数组。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1694,7 +1728,7 @@ a2 // [2, 4, 6, 8]
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

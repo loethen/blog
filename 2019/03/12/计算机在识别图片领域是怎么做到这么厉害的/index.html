@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。 最">
+<meta name="description" content="本文翻译自How computers got shockingly good at recognizing images 2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机在识别图片领域是怎么做到这么厉害的">
 <meta property="og:url" content="http://loethen.github.io/blog/2019/03/12/计算机在识别图片领域是怎么做到这么厉害的/index.html">
 <meta property="og:site_name" content="loethen&#39;s blog">
-<meta property="og:description" content="2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。 最">
+<meta property="og:description" content="本文翻译自How computers got shockingly good at recognizing images 2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/12/Screen-Shot-2018-12-18-at-8.53.12-AM-640x319.png">
 <meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/08/tikz12-1.png">
 <meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/08/MnistExamples.png">
 <meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/10/seven.png">
-<meta property="og:updated_time" content="2019-03-14T07:53:44.637Z">
+<meta property="og:updated_time" content="2019-03-20T07:08:46.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机在识别图片领域是怎么做到这么厉害的">
-<meta name="twitter:description" content="2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。 最">
+<meta name="twitter:description" content="本文翻译自How computers got shockingly good at recognizing images 2012年一篇里程碑式的论文改变了软件识别图片的方式。 现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，">
 <meta name="twitter:image" content="https://cdn.arstechnica.net/wp-content/uploads/2018/12/Screen-Shot-2018-12-18-at-8.53.12-AM-640x319.png">
 
 
@@ -304,9 +304,10 @@
       
 
       
-        <p>2012年一篇里程碑式的论文改变了软件识别图片的方式。</p>
-<p>现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件一种复制的方法”理解”这张图片，在这之前的技术是不可能做到的。</p>
-<p>最近几年，研究人员发现随着他们建立深度网络，并使用大量的数据训练她们，软件的识别准确性越来越高了。这也创造了对计算机能力几乎无法满足的胃口，提升了哪些GPU厂商的财富，例如Nvidia,AMD。谷歌几年以前，就开发了自己的定制神经网络芯片，其他公司也积极的跟进。</p>
+        <p>本文翻译自<a href="https://arstechnica.com/science/2018/12/how-computers-got-shockingly-good-at-recognizing-images/" target="_blank" rel="noopener">How computers got shockingly good at recognizing images</a></p>
+<p>2012年一篇里程碑式的论文改变了软件识别图片的方式。</p>
+<p>现在，我可以打开谷歌相册，输入”海滩“,将会看到大量的海滩照片，这些都是我过去十年去过的地方。我从来没有给这些照片打过标签，取而代之的是，谷歌确认这些照片中的海滩，是通过这些照片里面的内容本身。这个看起来好像挺普通的功能，是运用了一项技术，叫做深度卷积神经网络。这个技术能让软件以一种复杂的方法”理解”这张图片，在这之前的技术是不可能做到的。</p>
+<p>最近几年，研究人员发现随着他们建立深度网络，并使用大量的数据训练她们，软件的识别准确性越来越高了。这也创造了对计算机能力几乎无法满足的胃口，提升了那些GPU厂商的财富，例如Nvidia, AMD。谷歌几年以前，就开发了自己的定制神经网络芯片，其他公司也积极的跟进。</p>
 <p>举个例子，在特斯拉，公司请到了深度学习专家Andrej Karpathy负责公司的自动驾驶项目。特斯拉正在开发自己的芯片，来为下一代的自动驾驶加速神经网络运算。另一个例子， 在苹果公司，A11和A12芯片在最近的iPhone的核心中都包含了“神经引擎”，用来加速神经网络运算。以此提供更好的图片和声音识别应用。</p>
 <p>这篇文章中我与之交谈的专家，将当期深度学习热潮追溯到一篇特定的论文，绰号AlexNet，论文的主要作者Alex Krizhevsky.</p>
 <p>“在我的印象中，2012年是里程碑式的一年，当AlexNet的论文出来以后”，机器学习的专家Sean Gerrish说。</p>
@@ -333,6 +334,8 @@
 <p>为此，反向传播算法计算每个输入权重参数的误差梯度。作为一个衡量标准，对于给定的一个输入权重值的变化，所引起的输出值的误差变化的一个衡量标准，算法使用这个梯度来决定需要改变每个输入权重值的程度。梯度越大，需要改变的参数越多。</p>
 <p>换句话说，训练程序”教”输出层的神经元，不要把注意力放在那些朝错误方向的输入值上（这里指中间层的神经元），而是多关注那些能够朝正确的输入值方向上。</p>
 <p>该算法针对每个其他输出层神经元重复该步骤。它减少了“1”，“2”，“3”，“4”，“5”，“6”，“8”和“9”神经元（但不是“7”神经元）的输入权重将这些输出神经元的值向下推</p>
+<p>plus: 文章没翻译完，一是太长了，二是这里的数学知识不太了解，等我入门机器学习以后，再继续翻译吧。有英文基础的建议看原文，虽然可能有些数学原理看不懂，但是还是能大概理解什么是机器学习。</p>
+<p><a href="https://classroom.udacity.com/courses/ud187" target="_blank" rel="noopener">Udacity免费课程</a><br><a href="https://developers.google.cn/machine-learning" target="_blank" rel="noopener">Google tensorflow 免费课程</a></p>
 <p>原文地址 <a href="https://arstechnica.com/science/2018/12/how-computers-got-shockingly-good-at-recognizing-images/" target="_blank" rel="noopener">How computers got shockingly good at recognizing images</a></p>
 
       
@@ -367,6 +370,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/03/20/进程和线程/" rel="prev" title="理解线程和进程的关系">
+                理解线程和进程的关系 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -447,7 +454,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

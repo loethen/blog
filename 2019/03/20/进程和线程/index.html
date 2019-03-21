@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="探索并发的世界，一次一步。 得利于硬件的进步和更智能的操作系统，现代计算机都有能力同时执行多个操作。就执行和响应速度而言，计算机的这个特性使你的程序运行的更快。 编写利用这种能力的软件，是如此的吸引人。但是棘手的是，它需要你了解你的计算机在执行的时候，到底发生了什么。在第一章中，我将试着揭开线程的面纱，线程是操作系统提供的工具之一，用来执行这种有”魔力“的操作，让我们开始吧！ 进程和线程：用正确的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解线程和进程的关系">
+<meta property="og:url" content="http://loethen.github.io/blog/2019/03/20/进程和线程/index.html">
+<meta property="og:site_name" content="loethen&#39;s blog">
+<meta property="og:description" content="探索并发的世界，一次一步。 得利于硬件的进步和更智能的操作系统，现代计算机都有能力同时执行多个操作。就执行和响应速度而言，计算机的这个特性使你的程序运行的更快。 编写利用这种能力的软件，是如此的吸引人。但是棘手的是，它需要你了解你的计算机在执行的时候，到底发生了什么。在第一章中，我将试着揭开线程的面纱，线程是操作系统提供的工具之一，用来执行这种有”魔力“的操作，让我们开始吧！ 进程和线程：用正确的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/processes-threads.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/concurrency-parallelism.png">
+<meta property="og:updated_time" content="2019-03-21T05:50:21.198Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解线程和进程的关系">
+<meta name="twitter:description" content="探索并发的世界，一次一步。 得利于硬件的进步和更智能的操作系统，现代计算机都有能力同时执行多个操作。就执行和响应速度而言，计算机的这个特性使你的程序运行的更快。 编写利用这种能力的软件，是如此的吸引人。但是棘手的是，它需要你了解你的计算机在执行的时候，到底发生了什么。在第一章中，我将试着揭开线程的面纱，线程是操作系统提供的工具之一，用来执行这种有”魔力“的操作，让我们开始吧！ 进程和线程：用正确的">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/processes-threads.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://loethen.github.io/blog/2019/03/20/进程和线程/"/>
+
+
+
+
+
+  <title>理解线程和进程的关系 | loethen's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">loethen's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">养猫写码 meow and code</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/03/20/进程和线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="loethen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/cat.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="loethen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">理解线程和进程的关系</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-20T13:30:05+08:00">
+                2019-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>探索并发的世界，一次一步。</p>
+<p>得利于硬件的进步和更智能的操作系统，现代计算机都有能力同时执行多个操作。就执行和响应速度而言，计算机的这个特性使你的程序运行的更快。</p>
+<p>编写利用这种能力的软件，是如此的吸引人。但是棘手的是，它需要你了解你的计算机在执行的时候，到底发生了什么。在第一章中，我将试着揭开线程的面纱，线程是操作系统提供的工具之一，用来执行这种有”魔力“的操作，让我们开始吧！</p>
+<h2 id="进程和线程：用正确的方法命名"><a href="#进程和线程：用正确的方法命名" class="headerlink" title="进程和线程：用正确的方法命名"></a>进程和线程：用正确的方法命名</h2><p>现代操作系统可以同时运行多个程序。这就是为什么你能在浏览器里看这篇文章的同时，又能用音乐播放器听音乐。我们知道每个被执行的程序被称为一个进程。操作系统可以利用底层硬件，和一些软件的技巧来使每个进程独立于其他进程运行。无论是哪种方式，最终的结果就是你感觉你的程序都在同时运行。</p>
+<p>运行进程不是操作系统同时执行数个操作的唯一方式，每个进程的内部，可以同时运行多个子任务，这些子任务称为线程。你可以想象一下，一个线程就是一个进程的切片。在进程开始运行的时候，内部至少触发一个线程，这个线程称为主线程。然后根据程序或者程序员的需要，可以额外增加或结束其他线程。<strong>多线程</strong>就是在一个进程内部运行多个线程。</p>
+<p>举个栗子，就像你的音乐播放器就是多线程，一个主线程用来渲染界面，另一个线程用来播放音乐或其他等等操作。。</p>
+<p>你可以把操作系统当成一个容器，这个容器里面盛满了进程，每个进程里面又含有很多线程。这篇文章仅仅关注线程，但是这整个话题是如此的吸引人，以后值得更深入的分析。<br><img src="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/processes-threads.png" alt=""></p>
+<h2 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h2><p>每个进程都有自己的内存块，这个是操作系统分配的。默认这个内存不能和其他进程共享，你的浏览器没有权限访问你音乐播放器的内存，反之亦然。同样的，如果你打开浏览器两次，那是两个独立的进程，有不同的内存区域。所以默认的，两个进程没办法分享数据，除非他们执行一个高级的技巧–IPC(inter-process communication)</p>
+<p>跟进程不一样， 线程共享操作系统分配给他们所属进程的内存块。你音乐播放器的界面数据是可以容易的被音频引擎访问的，反之亦然。最重要的是，比起进程，线程是很轻量级的，他们消耗很少的资源，创建起来很快，这就是为什么它们又被称为<strong>轻量级的进程</strong></p>
+<h2 id="Green-threads-of-fibers"><a href="#Green-threads-of-fibers" class="headerlink" title="Green threads, of fibers"></a>Green threads, of fibers</h2><p>当前提到的线程，都是操作系统层面的事情：一个进程需要出发线程，只能与操作系统通信。但是不是每一个平台都原生的支持线程。所以<strong>绿色线程</strong>也被称为<strong>纤维</strong>，就是这种情况下，多线程的一个替代品。比如一个虚拟机就可能实行绿色线程，因为底层操作系统不支持原生的线程。</p>
+<p>在运行层面上，创建和管理绿色线程是非常快的，因为它的实现绕过了操作系统。但是也有缺点，我们将在下一篇文章中讨论。</p>
+<p><strong>绿色线程</strong>名字来源与Sun公司的绿色团队（Green Team),是90年代原生Java线程库的设计师。现在，Java不再使用绿色线程了，他们在2000年又转到原生线程上了。其他一些编程语言– Go, Haskell, Rust等都实现了自己的绿色线程。</p>
+<h2 id="线程能用来做什么"><a href="#线程能用来做什么" class="headerlink" title="线程能用来做什么"></a>线程能用来做什么</h2><p>为什么进程需要雇佣多个线程？就像我前面提到的，同时做很多事情，能够极大的提高做事情的效率。就说你在影片编辑器里渲染一部电影，这个编辑器应该足够智能的在多个线程间传递渲染操作，每个线程都处理整个影片中的一段。所以当只有一个线程可以用的时候，可能要花一个小时，2个线程的话30分钟，4个线程的话，15分钟。</p>
+<p>真的这么简单？还有3个重要的点需要考虑：</p>
+<ul>
+<li>不是每个程序都需要使用多线程，如果你的应用是处理有序（串联）的操作，或者经常需要等待用户的响应，多线程可能不是那么适合。</li>
+<li>你只是没有抛出更多线程让你的程序运行的跟快，每个子任务都要小心的考虑和设计它们的并行操作。</li>
+<li>线程在真正的并发下并不不能100%保证正确的处理它们的操作。这取决于底层的硬件。</li>
+</ul>
+<p>最后一条是很关键的。如果你的计算机不支持多线程的同时操作，操作系统必须模拟它。让我们用1分钟的时间看看是如何做的，假设<strong>并发</strong>（concurrency）是我们的一种感知，就是有多个任务在同时处理，而<strong>真正的并行</strong>(parallelism)是同时处理的任务。</p>
+<p><img src="https://raw.githubusercontent.com/monocasual/internalpointers-files/master/2019/02/concurrency-parallelism.png" alt=""></p>
+<h2 id="是什么使并发和并行成为可能"><a href="#是什么使并发和并行成为可能" class="headerlink" title="是什么使并发和并行成为可能"></a>是什么使并发和并行成为可能</h2><p>电脑里的CPU做了运行程序的最艰苦的工作，它包含以下几个部分，最主要的成为<strong>核心</strong>，这是计算真正执行的地方。一个核心同一时间只能做一个操作。</p>
+<p>这当然是一个主要的缺点。基于这个原因，操作系统又开发了高级的技术，使用户有能力同时运行多进程（或线程），尤其是在图形环境中。<br>即使是单核的机器。其中最重要的一个技术称为<strong>抢先式多任务处理</strong>（preemptive multitasking），就是打断正在执行的任务，转换到另一个任务上，过一会再转回来，</p>
+<p>所以，当你的计算机只有单核的时候，操作系统的部分任务就是传播这个单核的算力，跨越多个进程或线程。循环执行他们中的一个到另一个。这个操作会给你一种错觉，让你感觉好像多个程序在同时执行，或者一个程序同时做了多件事情。我们已经讲到了并发，但真正的并行–能够同时运行多个进程，还没讲到。</p>
+<p>如今现代的CPU都有多个核心，每一个都可以同时执行一个独立的操作，这就意味着真正的并发成为可能。比如我我的inter core i7 有4个核心，它能同时处理4个进程或线程。</p>
+<p>操作系统能够探测到CPU的数量，然后给它们分配进程或者线程。线程可能分配给操作系统喜欢的任何核心，这种类型的调度对你的程序来说是完全透明的，另外，如果所有核心都在忙的话，抢先式多任务处理就应该起作用了。这就给你了机会，来运行比你计算机真正核心数多的进程和线程。</p>
+<h2 id="单核心运行多线程程序，真的有意义吗？"><a href="#单核心运行多线程程序，真的有意义吗？" class="headerlink" title="单核心运行多线程程序，真的有意义吗？"></a>单核心运行多线程程序，真的有意义吗？</h2><p>真正的并行在单核机器上是不可能实现的。如果你的程序能够受益于多线程，那写一个多线程的程序还是有意义的。当程序使用多线程的情况下，抢先式多任务处理能够保证你的应用正常运行，即使其中有个线程在执行很慢，或是闭塞的任务。</p>
+<p>举个栗子，你在开发一个桌面应用，从一个很慢的硬盘里面读数据，如果你写的程序是单线程的，整个app会冻结，直到硬盘的操作完成，在等待磁盘唤醒时浪费了分配给唯一线程的CPU功率，当然，操作系统除此之外还运行许多其他进程，但你的应用程序不会取得任何进展。</p>
+<p>让我们重新考虑一下你的应用程序，如果改成多线程呢？ 线程A用来访问硬盘，同时线程B负责主要的界面。当线程A因为硬盘原因被卡住的时候，线程B仍然能够运行主要的用户界面，保持你的程序正常响应。当你有两个线程的时候，操作系统可以让CPU资源在它们之前转换，而不是卡在慢的那个上面。</p>
+<h2 id="线程更多，问题更多"><a href="#线程更多，问题更多" class="headerlink" title="线程更多，问题更多"></a>线程更多，问题更多</h2><p>我们知道，线程共享它们父进程的内存块，这就使得多个线程可以很容易的互相交换数据，在同一个应用内。举个例子，一个电影编辑器可能占用含有视频时间轴的一大部分共享内存，而这里共享的内存又可以被他的多个工作线程读取，这里的线程被设计用来渲染影片，并导出到硬盘文件。它们只需要一个到内存区块的指针，用来读取然后输出渲染的帧到硬盘。</p>
+<p>只要两个或多个线程都从相同的内存位置读取数据，事情就能顺利的进行。But,注意这个but,让至少一个线程往内存里面写数据，而同时多个其他线程在读数据，问题就来了，这里有两个问题：</p>
+<ul>
+<li><strong>数据竞赛</strong> – 让一个线程在执行写操作，而一个现在在执行读操作，如果这时候，写还没完成，那读肯定会得到一个坏的数据。</li>
+<li><strong>竞赛条件</strong> – 读操作应该在写操作完成之后。但是如果相反的情况会发生什么？比数据竞赛更微妙的是，当两个或多个线程以不可预期的顺序做他们的工作，而实际上这些操作应该以特定的顺序执行，你的程序就会触发一个竞赛条件。</li>
+</ul>
+<h2 id="线程安全的概念"><a href="#线程安全的概念" class="headerlink" title="线程安全的概念"></a>线程安全的概念</h2><p>一段代码如果能正常工作，被称之为线程安全，也就是没有数据竞赛或者竞赛条件，尽管许多线程在同步执行。你可能已经注意到一些编程库声称自己是线程安全的：如果你在写多线程的程序，你希望确保任何其他的第三方函数能够跨线程正确的调用，而不触发并发问题。</p>
+<h2 id="数据竞赛的根本原因"><a href="#数据竞赛的根本原因" class="headerlink" title="数据竞赛的根本原因"></a>数据竞赛的根本原因</h2><p>我们知道CPU核心同一时间只能执行一条机器指令，这种指令被称为<strong>原子</strong>操作，因为它不能再分解：不能再分解成更小的操作。</p>
+<p>这种不能分割的特性使得原子操作自带线程安全。当一个原子在执行写操作的时候，其他线程是不可能读完成一半的数据的。反过来，当一个线程在执行一个原子读操作的时候，肯定是读的当时完整的数据。对一个线程来说，是不可能遗漏原子操作的，所以不可能发生数据竞赛。</p>
+<p>坏消息是，绝大部分的操作都不是原子操作。就是一个小小的赋值语句 <code>x = 1</code>,在一些硬件上都可能是多个原子机器指令的组合。使得赋值本身变成非原子操作。所以在赋值的时候，如果一个线程在读<code>x</code>的值，那就会触发数据竞赛。</p>
+<h2 id="竞赛条件的根本原因"><a href="#竞赛条件的根本原因" class="headerlink" title="竞赛条件的根本原因"></a>竞赛条件的根本原因</h2><p>抢先式多任务处理使操作系统能够完成的控制进程管理。通过高级的调度算法，它能开始，停止或者暂停线程。你作为一个程序员，是不能控制执行的时间和顺序的。实际上，像下面这样的代码是没有保护的</p>
+<pre><code>writer_thread.start()
+reader_thread.start()
+</code></pre><p>这段代码将以特定的顺序，开始两个进程。运行几次你将会注意到，每次运行的行为都不一样：有时writer线程先开始，有时候reader线程先开始，如果你的程序需要writer线程总是先执行，那你肯定会触发竞赛条件。</p>
+<p>这种行为称为 <strong>非确定性</strong> ：你不能预测到每次执行的顺序。在debug由竞赛条件引起的错误的时候，会让人很恼火，因为你不能每次都重现这个错误。</p>
+<h2 id="教会线程相处：-并发控制"><a href="#教会线程相处：-并发控制" class="headerlink" title="教会线程相处： 并发控制"></a>教会线程相处： 并发控制</h2><p>数据竞赛和竞赛条件都是现实中会遇到的问题。容纳两个或多个并发线程的技术称为<strong>并发控制</strong>，操作系统和编程语言提供了好几种方案来处理它。</p>
+<ul>
+<li><p>同步 – 确保资源同一时间只能被一个线程使用。同步是将代码的特定部分标记为“受保护”，以便两个或多个并发线程不会同时执行它，从而搞砸了你的共享数据;</p>
+</li>
+<li><p>原子操作 – 一堆的非原子操作（像前面提到的赋值）通过操作系统提供的特殊指令，可以被转化为原子操作。用这种方法，共享的数据总会保持有效的状态，不管其他的线程以何种方式访问它。</p>
+</li>
+<li><p>不可变数据 – 共享的数据标记为不可变状态。线程只允许读，从根本上解决问题。我们知道，如果是只读的话，访问相同的内存地址里面的数据是安全的。这也是<a href="https://en.wikipedia.org/wiki/Functional_programming" target="_blank" rel="noopener">函数编程</a>里面的主要哲学。</p>
+</li>
+</ul>
+<p>翻译自<a href="https://www.internalpointers.com/post/gentle-introduction-multithreading" target="_blank" rel="noopener">A gentle introduction to multithreading</a></p>
+<p>单词</p>
+<p><a href="https://www.quora.com/What-does-under-the-hood-mean-in-programming" target="_blank" rel="noopener">“under the hood”</a></p>
+<p>fiber: <a href="https://en.wikipedia.org/wiki/Fiber_(computer_science" target="_blank" rel="noopener">In computer science, a fiber is a particularly lightweight thread of execution.
+</a>)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/03/12/计算机在识别图片领域是怎么做到这么厉害的/" rel="next" title="计算机在识别图片领域是怎么做到这么厉害的">
+                <i class="fa fa-chevron-left"></i> 计算机在识别图片领域是怎么做到这么厉害的
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog/images/cat.png"
+                alt="loethen" />
+            
+              <p class="site-author-name" itemprop="name">loethen</p>
+              <p class="site-description motion-element" itemprop="description">frontend javascript 前端 js cat</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程：用正确的方法命名"><span class="nav-number">1.</span> <span class="nav-text">进程和线程：用正确的方法命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程的区别"><span class="nav-number">2.</span> <span class="nav-text">进程和线程的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Green-threads-of-fibers"><span class="nav-number">3.</span> <span class="nav-text">Green threads, of fibers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程能用来做什么"><span class="nav-number">4.</span> <span class="nav-text">线程能用来做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#是什么使并发和并行成为可能"><span class="nav-number">5.</span> <span class="nav-text">是什么使并发和并行成为可能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单核心运行多线程程序，真的有意义吗？"><span class="nav-number">6.</span> <span class="nav-text">单核心运行多线程程序，真的有意义吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程更多，问题更多"><span class="nav-number">7.</span> <span class="nav-text">线程更多，问题更多</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全的概念"><span class="nav-number">8.</span> <span class="nav-text">线程安全的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据竞赛的根本原因"><span class="nav-number">9.</span> <span class="nav-text">数据竞赛的根本原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#竞赛条件的根本原因"><span class="nav-number">10.</span> <span class="nav-text">竞赛条件的根本原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#教会线程相处：-并发控制"><span class="nav-number">11.</span> <span class="nav-text">教会线程相处： 并发控制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">loethen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
