@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="js算法," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="面试的时候碰到的问题：  农场里面买了1只小羊，这只小羊第二年和第四年都会生一只小羊，第五年会死掉。生下来的小羊会继续生小羊,问若干年都农场共有多少羊？  这道题的解题思路有两个。先说第一个，使用递归，想想阶乘是怎么实现的？ function sheepNum(year){     var num = 1;     for(var i=1; i&amp;lt;=year; i++){         if">
-<meta name="keywords" content="js算法">
+<meta name="description" content="puppeteer是什么:Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS算法题 生小羊">
-<meta property="og:url" content="http://loethen.github.io/blog/2016/03/13/JS算法题-生小羊/index.html">
+<meta property="og:title" content="用Puppeteer破解极验滑动拼图验证码">
+<meta property="og:url" content="http://loethen.github.io/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/index.html">
 <meta property="og:site_name" content="loethen&#39;s blog">
-<meta property="og:description" content="面试的时候碰到的问题：  农场里面买了1只小羊，这只小羊第二年和第四年都会生一只小羊，第五年会死掉。生下来的小羊会继续生小羊,问若干年都农场共有多少羊？  这道题的解题思路有两个。先说第一个，使用递归，想想阶乘是怎么实现的？ function sheepNum(year){     var num = 1;     for(var i=1; i&amp;lt;=year; i++){         if">
+<meta property="og:description" content="puppeteer是什么:Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2016-03-13T13:05:59.000Z">
+<meta property="og:updated_time" content="2019-08-15T06:59:00.254Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS算法题 生小羊">
-<meta name="twitter:description" content="面试的时候碰到的问题：  农场里面买了1只小羊，这只小羊第二年和第四年都会生一只小羊，第五年会死掉。生下来的小羊会继续生小羊,问若干年都农场共有多少羊？  这道题的解题思路有两个。先说第一个，使用递归，想想阶乘是怎么实现的？ function sheepNum(year){     var num = 1;     for(var i=1; i&amp;lt;=year; i++){         if">
+<meta name="twitter:title" content="用Puppeteer破解极验滑动拼图验证码">
+<meta name="twitter:description" content="puppeteer是什么:Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://loethen.github.io/blog/2016/03/13/JS算法题-生小羊/"/>
+  <link rel="canonical" href="http://loethen.github.io/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/"/>
 
 
 
 
 
-  <title>JS算法题 生小羊 | loethen's blog</title>
+  <title>用Puppeteer破解极验滑动拼图验证码 | loethen's blog</title>
   
 
 
@@ -233,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2016/03/13/JS算法题-生小羊/">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
@@ -250,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JS算法题 生小羊</h1>
+          <h1 class="post-title" itemprop="name headline">用Puppeteer破解极验滑动拼图验证码</h1>
         
 
         <div class="post-meta">
@@ -262,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-13T20:33:22+08:00">
-                2016-03-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-15T14:26:41+08:00">
+                2019-08-15
               </time>
             
 
@@ -300,78 +299,9 @@
       
 
       
-        <p>面试的时候碰到的问题：</p>
-<blockquote>
-<p>农场里面买了1只小羊，这只小羊第二年和第四年都会生一只小羊，第五年会死掉。生下来的小羊会继续生小羊,问若干年都农场共有多少羊？</p>
-</blockquote>
-<p>这道题的解题思路有两个。<br>先说第一个，使用递归，想想阶乘是怎么实现的？</p>
-<pre><code>function sheepNum(year){
-    var num = 1;
-    for(var i=1; i&lt;=year; i++){
-        if(i==2){
-            num += sheepNum(year - 2);
-        }else if(i==4){
-            num += sheepNum(year - 4);
-        }else if(i==5){
-            num--;
-        }
-    }
-    return num;
-}
-
-sheepNum(10)
-</code></pre><p>说说我的解题思路，把复杂度降低。</p>
-<pre><code>//这是农场
-var farm = [];
-
-//构造一只羊，羊有3个方法，成长，生育，死亡
-function Sheep() {
-  this.age = 0;
-}
-
-Sheep.prototype.grow = function(index,years){
-  for(var i=1; i&lt;=years; i++){
-    //每年都会长1岁
-    this.age++;
-
-    //小羊2岁4岁都会生一只新的小羊    
-    if(this.age == 2 || this.age == 4){
-      //注意这里的参数
-      this.bear(new Sheep(),years-i)
-    }
-
-    if(this.age == 5){
-      //5岁死亡
-      this.die(index);
-      break;
-    }
-  }
-}
-
-Sheep.prototype.bear = function(childSheep,years){
-  //生羊的时候把新生的羊也放进农场。
-  var childIndex = farm.push(childSheep) - 1;
-
-  //小羊继续长大,参数childIndex：羊在农场中的编号，years:此羊离N年还能长几年
-  childSheep.grow(childIndex,years)
-}
-
-Sheep.prototype.die = function(index){
-  //小羊死后移出农场
-  farm.splice(index,1);
-}
-</code></pre><p>这样调用就可以了</p>
-<pre><code>var sheep = new Sheep();
-//羊在羊圈中的位置
-var index = farm.push(sheep) - 1;
-//N年以后的情况
-var years = 40;
-//从第一只羊自己成长就不用管它了。
-sheep.grow(index,years);
-
-//统计农场里面一共几只羊。
-console.log(&apos;total:&apos;+farm.length)
-</code></pre><p>当然你也可以把农场设成number,生小羊number+1，小羊死number-1。<br>这样是不是比递归好理解一点呢？</p>
+        <h1 id="puppeteer是什么"><a href="#puppeteer是什么" class="headerlink" title="puppeteer是什么:"></a>puppeteer是什么:</h1><pre><code>Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full (non-headless) Chrome or Chromium.
+</code></pre><p>你看puppeteer这个单词是木偶戏的意思, 你再看它的logo, 可以说非常传神了. 简单的说,就是让你可以通过代码模拟人在浏览器的操作. </p>
+<p>完整的代码看<a href="https://github.com/loethen/geetest-jailbreaking" target="_blank" rel="noopener">这里</a></p>
 
       
     </div>
@@ -387,12 +317,6 @@ console.log(&apos;total:&apos;+farm.length)
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/blog/tags/js算法/" rel="tag"># js算法</a>
-          
-        </div>
-      
 
       
       
@@ -402,8 +326,8 @@ console.log(&apos;total:&apos;+farm.length)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2016/03/12/Javascript中的发布订阅/" rel="next" title="Javascript中的发布订阅模式">
-                <i class="fa fa-chevron-left"></i> Javascript中的发布订阅模式
+              <a href="/blog/2019/05/28/Javascript函数防抖和节流(debounce and throttle)/" rel="next" title="Javascript函数防抖和节流(debounce and throttle)">
+                <i class="fa fa-chevron-left"></i> Javascript函数防抖和节流(debounce and throttle)
               </a>
             
           </div>
@@ -411,10 +335,6 @@ console.log(&apos;total:&apos;+farm.length)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2016/03/15/Javascript-deep-copy-and-shallow-copy/" rel="prev" title="Javascript deep copy and shallow copy">
-                Javascript deep copy and shallow copy <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -466,8 +386,17 @@ console.log(&apos;total:&apos;+farm.length)
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -522,6 +451,22 @@ console.log(&apos;total:&apos;+farm.length)
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#puppeteer是什么"><span class="nav-number">1.</span> <span class="nav-text">puppeteer是什么:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
