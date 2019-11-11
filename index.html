@@ -304,8 +304,7 @@
         
           
             <p>基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, <code>this</code> 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用.</p>
-<p>##DOM中使用this</p>
-<p>来, 让我们以一个例子开始:</p>
+<h2 id="DOM中使用this"><a href="#DOM中使用this" class="headerlink" title="DOM中使用this"></a>DOM中使用this</h2><p>来, 让我们以一个例子开始:</p>
 <pre><code>function doSomething() {
     this.style.color = &apos;#cc0000&apos;;
 }
@@ -331,10 +330,8 @@ function doSomething(obj) {
     // obj now refers to the HTML element, so we can do
     obj.style.color = &apos;#cc0000&apos;;
 }
-</code></pre><p>##全局环境</p>
-<p>全局环境中(任何函数外)  <code>this</code>  指向全局对象.<br>在浏览器中指向 <code>window</code></p>
-<p>##函数内部环境</p>
-<p><code>this</code> 取决于函数调用的方式 (先不讨论严格模式))</p>
+</code></pre><h2 id="全局环境"><a href="#全局环境" class="headerlink" title="全局环境"></a>全局环境</h2><p>全局环境中(任何函数外)  <code>this</code>  指向全局对象.<br>在浏览器中指向 <code>window</code></p>
+<h2 id="函数内部环境"><a href="#函数内部环境" class="headerlink" title="函数内部环境"></a>函数内部环境</h2><p><code>this</code> 取决于函数调用的方式 (先不讨论严格模式))</p>
 <p>看下面的例子</p>
 <pre><code>function f1(){
     return this;
@@ -408,8 +405,7 @@ console.log(o.f()); // logs 37
 o.b = {g: independent};
 console.log(o.b.g()); // undefined
 </code></pre><p>这里注意 <code>o.b</code>的例子中,this指向<code>o.b</code>.与她的对象<code>o</code>没什么关系.</p>
-<p>##原型链中的this</p>
-<pre><code>var o = {
+<h2 id="原型链中的this"><a href="#原型链中的this" class="headerlink" title="原型链中的this"></a>原型链中的this</h2><pre><code>var o = {
     f: function() { 
         return this.a + this.b; 
     }
@@ -420,8 +416,7 @@ p.b = 4;
 
 console.log(p.f()); // 5
 </code></pre><p>如果该方法存在于一个对象的原型链上，那么this指向的是调用这个方法的对象，就像该方法在对象上一样。原型链这里很有意思. 虽然p没有f方法, 但是在它的原型链中找到了, 但是f是作为p的方法调用的, 所以它的this指向p. 多读两遍这句话, 真的很有意思.</p>
-<p>##构造函数中的this</p>
-<p>当一个函数用作构造函数时（使用new关键字），它的this被绑定到正在构造的新对象。</p>
+<h2 id="构造函数中的this"><a href="#构造函数中的this" class="headerlink" title="构造函数中的this"></a>构造函数中的this</h2><p>当一个函数用作构造函数时（使用new关键字），它的this被绑定到正在构造的新对象。</p>
 <p>如果构造函数中手动返回了对象, 那this绑定的默认对象就会被丢弃.</p>
 <pre><code>function C2(){
     this.a = 37;
