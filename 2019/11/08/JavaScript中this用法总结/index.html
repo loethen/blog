@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="puppeteer是什么:Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full">
+<meta name="description" content="基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, this 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用. ##DOM中使用this 来, 让我们以一个例子开始: function doSomething() {     this.style.color = &amp;apos;#cc0000&amp;apos;; } 这里的this">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用Puppeteer破解极验滑动拼图验证码">
-<meta property="og:url" content="http://loethen.github.io/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/index.html">
+<meta property="og:title" content="JavaScript中this用法总结">
+<meta property="og:url" content="http://loethen.github.io/blog/2019/11/08/JavaScript中this用法总结/index.html">
 <meta property="og:site_name" content="loethen&#39;s blog">
-<meta property="og:description" content="puppeteer是什么:Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full">
+<meta property="og:description" content="基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, this 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用. ##DOM中使用this 来, 让我们以一个例子开始: function doSomething() {     this.style.color = &amp;apos;#cc0000&amp;apos;; } 这里的this">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-08T06:45:13.903Z">
+<meta property="og:updated_time" content="2019-11-11T08:31:29.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用Puppeteer破解极验滑动拼图验证码">
-<meta name="twitter:description" content="puppeteer是什么:Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full">
+<meta name="twitter:title" content="JavaScript中this用法总结">
+<meta name="twitter:description" content="基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, this 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用. ##DOM中使用this 来, 让我们以一个例子开始: function doSomething() {     this.style.color = &amp;apos;#cc0000&amp;apos;; } 这里的this">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://loethen.github.io/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/"/>
+  <link rel="canonical" href="http://loethen.github.io/blog/2019/11/08/JavaScript中this用法总结/"/>
 
 
 
 
 
-  <title>用Puppeteer破解极验滑动拼图验证码 | loethen's blog</title>
+  <title>JavaScript中this用法总结 | loethen's blog</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/">
+    <link itemprop="mainEntityOfPage" href="http://loethen.github.io/blog/blog/2019/11/08/JavaScript中this用法总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="loethen">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">用Puppeteer破解极验滑动拼图验证码</h1>
+          <h1 class="post-title" itemprop="name headline">JavaScript中this用法总结</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-15T14:26:41+08:00">
-                2019-08-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-08T14:46:31+08:00">
+                2019-11-08
               </time>
             
 
@@ -299,12 +299,134 @@
       
 
       
-        <h1 id="puppeteer是什么"><a href="#puppeteer是什么" class="headerlink" title="puppeteer是什么:"></a>puppeteer是什么:</h1><pre><code>Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full (non-headless) Chrome or Chromium.
-</code></pre><p>你看puppeteer这个单词是木偶戏的意思, 你再看它的logo, 可以说非常传神了. 简单的说,就是让你可以通过代码模拟人在浏览器的操作. </p>
-<p>具体的DEMO看下面的链接. 模仿了什么值得买网页端的登陆后签到.</p>
-<p>过程中难点就是怎么通过代码模拟极验的滑动验证码, 需要注意的就是鼠标的滑动轨迹不要匀速滑动.</p>
-<p>完整的代码看<a href="https://github.com/loethen/geetest-jailbreaking" target="_blank" rel="noopener">这里</a></p>
+        <p>基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, <code>this</code> 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用.</p>
+<p>##DOM中使用this</p>
+<p>来, 让我们以一个例子开始:</p>
+<pre><code>function doSomething() {
+    this.style.color = &apos;#cc0000&apos;;
+}
+</code></pre><p>这里的<code>this</code> 指向谁? <strong> 在Javascript中 <code>this</code>总是指向这个函数执行时的所以者. </strong> 如果用一句话来总结this的用法, 应该就是这一句, 虽然可能有特殊情况. 如果 doSomething()直接在页面中调用 ,那它的所有者就是这个页面本身, 或者window对象(或者global对象),如果是在html元素的<code>onclick</code>属性中调用, 那this就指向这个HTML元素,这种‘所有权’的归属是因为JavaScript是面向对象的结果.</p>
+<pre><code>element.onclick = doSomething;
+</code></pre><p>有一个情况要特别注意:</p>
+<pre><code>&lt;element onclick=&quot;doSomething()&quot;&gt;
+</code></pre><p>内联事件中的函数, 不是作为html元素的属性调用的! 它只是对函数的引用! 所以这里调用doSomethind()函数里面的this指向window, 因为它仅仅是找到doSomething然后执行它:</p>
+<pre><code>doSomething();
+</code></pre><p>以下几种this指向html元素:</p>
+<pre><code>element.onclick = doSomething
+element.addEventListener(&apos;click&apos;,doSomething,false)
+element.onclick = function () {this.style.color = &apos;#cc0000&apos;;}
+&lt;element onclick=&quot;this.style.color = &apos;#cc0000&apos;;&quot;&gt;
+</code></pre><p>以下几种this指向window</p>
+<pre><code>element.onclick = function () {doSomething()}
+&lt;element onclick=&quot;doSomething()&quot;&gt;
+</code></pre><p>内联事件中正确用法:</p>
+<pre><code>&lt;element onclick=&quot;doSomething(this)&quot;&gt;
 
+function doSomething(obj) {
+    // this is present in the event handler and is sent to the function
+    // obj now refers to the HTML element, so we can do
+    obj.style.color = &apos;#cc0000&apos;;
+}
+</code></pre><p>##全局环境</p>
+<p>全局环境中(任何函数外)  <code>this</code>  指向全局对象.<br>在浏览器中指向 <code>window</code></p>
+<p>##函数内部环境</p>
+<p><code>this</code> 取决于函数调用的方式 (先不讨论严格模式))</p>
+<p>看下面的例子</p>
+<pre><code>function f1(){
+    return this;
+}
+</code></pre><p>调用f1(), 将返回window对象, 因为直接调用<code>f1()</code>相当于调用<code>window.f1()</code> ,所以这里的 <code>this</code> 指向window对象</p>
+<p>如果想要改变<code>this</code>的执行环境,就要用到<code>call</code> or <code>apply</code>方法.</p>
+<p>看下面的例子</p>
+<pre><code>var obj = { a: &apos;chestnut&apos;}
+var a = &apos;pinapple&apos;
+
+function hold_what(arg){
+    return this.a;
+}
+
+hold_what(); // return &apos;pinapple&apos;
+hold_what.call(obj);  // return &apos;chestnut&apos;
+hold_what.apply(obj); // return &apos;chestnut&apos;
+</code></pre><p>注意的是call或者apply的第一个参数,如果不是一个对象,js会尝试将其转换成对象.</p>
+<p>##bind方法调用this</p>
+<p>调用<code>f.bind(obj)</code>会常见一个新的函数, 但是函数体内的<code>this</code>将永久的被绑定到obj. 无论这个函数在哪里被调用</p>
+<p>##箭头函数内调用this</p>
+<pre><code>// 创建一个含有bar方法的obj对象，
+// bar返回一个函数，
+// 这个函数返回this，
+// 这个返回的函数是以箭头函数创建的，
+// 所以它的this被永久绑定到了它外层函数的this。
+// bar的值可以在调用中设置，这反过来又设置了返回函数的值。
+var obj = {
+    bar: function() {
+        var x = (() =&gt; this);
+        return x;
+    }
+};
+
+//作为对比,创建一个obj2
+var obj2 = {
+    bar: function() {
+        var x = function(){ return this };
+        return x;
+    }
+}
+
+var fn = obj.bar();
+var fn2 = obj2.bar();
+
+console.log(fn()===obj);     //结果1:  返回true
+console.log(fn2()===obj2);   //结果2:  返回false
+console.log(fn2()===window); //结果3:  返回true
+</code></pre><p>看结果,体会箭头函数和普通函数的区别.  特别注意这这行注视 <strong>所以它的this被永久绑定到了它外层函数的this。</strong></p>
+<p>##作为对象的方法调用this</p>
+<p>函数作为对象里的方法调用时, <code>this</code>指向调用该函数的对象.</p>
+<pre><code>var o = {
+    prop: 37,
+    f: function() {
+        return this.prop;
+    }
+};
+
+console.log(o.f()); // logs 37
+</code></pre><p>看下面的例子</p>
+<pre><code>var o = {prop: 37};
+
+function independent() {
+    return this.prop;
+}
+
+o.f = independent;
+
+console.log(o.f()); // logs 37
+
+o.b = {g: independent};
+console.log(o.b.g()); // undefined
+</code></pre><p>这里注意 <code>o.b</code>的例子中,this指向<code>o.b</code>.与她的对象<code>o</code>没什么关系.</p>
+<p>##原型链中的this</p>
+<pre><code>var o = {
+    f: function() { 
+        return this.a + this.b; 
+    }
+};
+var p = Object.create(o);
+p.a = 1;
+p.b = 4;
+
+console.log(p.f()); // 5
+</code></pre><p>如果该方法存在于一个对象的原型链上，那么this指向的是调用这个方法的对象，就像该方法在对象上一样。原型链这里很有意思. 虽然p没有f方法, 但是在它的原型链中找到了, 但是f是作为p的方法调用的, 所以它的this指向p. 多读两遍这句话, 真的很有意思.</p>
+<p>##构造函数中的this</p>
+<p>当一个函数用作构造函数时（使用new关键字），它的this被绑定到正在构造的新对象。</p>
+<p>如果构造函数中手动返回了对象, 那this绑定的默认对象就会被丢弃.</p>
+<pre><code>function C2(){
+    this.a = 37;
+    return {a:38};
+}
+
+o = new C2();
+console.log(o.a); // logs 38
+</code></pre>
       
     </div>
     
@@ -328,8 +450,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/05/28/Javascript函数防抖和节流(debounce and throttle)/" rel="next" title="Javascript函数防抖和节流(debounce and throttle)">
-                <i class="fa fa-chevron-left"></i> Javascript函数防抖和节流(debounce and throttle)
+              <a href="/blog/2019/08/15/用Puppeteer破解极验滑动拼图验证码/" rel="next" title="用Puppeteer破解极验滑动拼图验证码">
+                <i class="fa fa-chevron-left"></i> 用Puppeteer破解极验滑动拼图验证码
               </a>
             
           </div>
@@ -337,10 +459,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2019/11/08/JavaScript中this用法总结/" rel="prev" title="JavaScript中this用法总结">
-                JavaScript中this用法总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -392,17 +510,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -457,22 +566,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#puppeteer是什么"><span class="nav-number">1.</span> <span class="nav-text">puppeteer是什么:</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
