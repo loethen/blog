@@ -308,7 +308,8 @@
 <pre><code>function doSomething() {
     this.style.color = &apos;#cc0000&apos;;
 }
-</code></pre><p>这里的<code>this</code> 指向谁? <strong> 在Javascript中 <code>this</code>总是指向这个函数执行时的所以者. </strong> 如果用一句话来总结this的用法, 应该就是这一句, 虽然可能有特殊情况. 如果 doSomething()直接在页面中调用 ,那它的所有者就是这个页面本身, 或者window对象(或者global对象),如果是在html元素的<code>onclick</code>属性中调用, 那this就指向这个HTML元素,这种‘所有权’的归属是因为JavaScript是面向对象的结果.</p>
+</code></pre><p>这里的<code>this</code> 指向谁? <strong> 在Javascript中 <code>this</code>总是指向这个函数执行时的所以者. </strong> 如果用一句话来总结this的用法, 应该就是这一句. 如果 doSomething()直接在页面中调用 ,那它的所有者就是这个页面本身, 或者window对象(或者global对象).</p>
+<p>如果是在html元素的<code>onclick</code>属性中调用, 那this就指向这个HTML元素</p>
 <pre><code>element.onclick = doSomething;
 </code></pre><p>有一个情况要特别注意:</p>
 <pre><code>&lt;element onclick=&quot;doSomething()&quot;&gt;
@@ -425,7 +426,8 @@ console.log(p.f()); // 5
 
 o = new C2();
 console.log(o.a); // logs 38
-</code></pre><p>参考 <a href="https://www.quirksmode.org/js/this.html" target="_blank" rel="noopener">ppk the this keyword</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this" target="_blank" rel="noopener">MDN this</a>   </p>
+</code></pre><h2 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h2><p>JavaScript是面向对象的/</p>
+<p>参考 <a href="https://www.quirksmode.org/js/this.html" target="_blank" rel="noopener">ppk the this keyword</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this" target="_blank" rel="noopener">MDN this</a>   </p>
 
           
         
