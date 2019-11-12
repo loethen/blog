@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="loethen&#39;s blog">
 <meta property="og:description" content="基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, this 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用. DOM中使用this来, 让我们以一个例子开始: function doSomething() {     this.style.color = &amp;apos;#cc0000&amp;apos;; } 这里的this 指向">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-11T08:41:31.990Z">
+<meta property="og:updated_time" content="2019-11-12T01:20:22.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript中this用法总结">
 <meta name="twitter:description" content="基础知识时间长了也会忘, 虽然可能用对了, 但是又不知道为什么会对? 最后陷入了自我怀疑, this 可以说是js里面的灵魂关键字, 如果不能完全掌握它的原理, 你就不能随心所欲的使用. DOM中使用this来, 让我们以一个例子开始: function doSomething() {     this.style.color = &amp;apos;#cc0000&amp;apos;; } 这里的this 指向">
@@ -347,10 +347,20 @@ hold_what(); // return &apos;pinapple&apos;
 hold_what.call(obj);  // return &apos;chestnut&apos;
 hold_what.apply(obj); // return &apos;chestnut&apos;
 </code></pre><p>注意的是call或者apply的第一个参数,如果不是一个对象,js会尝试将其转换成对象.</p>
-<p>##bind方法调用this</p>
-<p>调用<code>f.bind(obj)</code>会常见一个新的函数, 但是函数体内的<code>this</code>将永久的被绑定到obj. 无论这个函数在哪里被调用</p>
-<p>##箭头函数内调用this</p>
-<pre><code>// 创建一个含有bar方法的obj对象，
+<h2 id="bind方法调用this"><a href="#bind方法调用this" class="headerlink" title="bind方法调用this"></a>bind方法调用this</h2><p>调用<code>f.bind(obj)</code>会创建一个新的函数, 但是函数体内的<code>this</code>将永久的被绑定到obj. 无论这个函数在哪里被调用</p>
+<pre><code>function f(){
+    return this.a;
+}
+
+var g = f.bind({a:&quot;azerty&quot;});
+console.log(g()); // azerty
+
+var h = g.bind({a:&apos;yoo&apos;}); // bind只生效一次！
+console.log(h()); // azerty
+
+var o = {a:37, f:f, g:g, h:h};
+console.log(o.f(), o.g(), o.h()); // 37, azerty, azerty
+</code></pre><h2 id="箭头函数内调用this"><a href="#箭头函数内调用this" class="headerlink" title="箭头函数内调用this"></a>箭头函数内调用this</h2><pre><code>// 创建一个含有bar方法的obj对象，
 // bar返回一个函数，
 // 这个函数返回this，
 // 这个返回的函数是以箭头函数创建的，
@@ -362,6 +372,8 @@ var obj = {
         return x;
     }
 };
+
+
 
 //作为对比,创建一个obj2
 var obj2 = {
@@ -377,9 +389,14 @@ var fn2 = obj2.bar();
 console.log(fn()===obj);     //结果1:  返回true
 console.log(fn2()===obj2);   //结果2:  返回false
 console.log(fn2()===window); //结果3:  返回true
-</code></pre><p>看结果,体会箭头函数和普通函数的区别.  特别注意这这行注视 <strong>所以它的this被永久绑定到了它外层函数的this。</strong></p>
-<p>##作为对象的方法调用this</p>
-<p>函数作为对象里的方法调用时, <code>this</code>指向调用该函数的对象.</p>
+
+// 但是注意，如果你只是引用obj的方法，
+// 而没有调用它
+var fn3 = obj.bar;
+// 那么调用箭头函数后，this指向window，因为它从 bar 继承了this。
+console.log(fn3()() == window); // true
+</code></pre><p>看结果,体会箭头函数和普通函数的区别.  特别注意这行注释 <strong>所以它的this被永久绑定到了它外层函数的this。</strong></p>
+<h2 id="作为对象的方法调用this"><a href="#作为对象的方法调用this" class="headerlink" title="作为对象的方法调用this"></a>作为对象的方法调用this</h2><p>函数作为对象里的方法调用时, <code>this</code>指向调用该函数的对象.</p>
 <pre><code>var o = {
     prop: 37,
     f: function() {
@@ -583,7 +600,7 @@ console.log(o.a); // logs 38
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM中使用this"><span class="nav-number">1.</span> <span class="nav-text">DOM中使用this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局环境"><span class="nav-number">2.</span> <span class="nav-text">全局环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数内部环境"><span class="nav-number">3.</span> <span class="nav-text">函数内部环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链中的this"><span class="nav-number">4.</span> <span class="nav-text">原型链中的this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数中的this"><span class="nav-number">5.</span> <span class="nav-text">构造函数中的this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结一下"><span class="nav-number">6.</span> <span class="nav-text">总结一下</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM中使用this"><span class="nav-number">1.</span> <span class="nav-text">DOM中使用this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局环境"><span class="nav-number">2.</span> <span class="nav-text">全局环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数内部环境"><span class="nav-number">3.</span> <span class="nav-text">函数内部环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind方法调用this"><span class="nav-number">4.</span> <span class="nav-text">bind方法调用this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#箭头函数内调用this"><span class="nav-number">5.</span> <span class="nav-text">箭头函数内调用this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作为对象的方法调用this"><span class="nav-number">6.</span> <span class="nav-text">作为对象的方法调用this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链中的this"><span class="nav-number">7.</span> <span class="nav-text">原型链中的this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数中的this"><span class="nav-number">8.</span> <span class="nav-text">构造函数中的this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结一下"><span class="nav-number">9.</span> <span class="nav-text">总结一下</span></a></li></ol></div>
             
 
           </div>

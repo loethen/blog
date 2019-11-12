@@ -351,10 +351,20 @@ hold_what(); // return &apos;pinapple&apos;
 hold_what.call(obj);  // return &apos;chestnut&apos;
 hold_what.apply(obj); // return &apos;chestnut&apos;
 </code></pre><p>注意的是call或者apply的第一个参数,如果不是一个对象,js会尝试将其转换成对象.</p>
-<p>##bind方法调用this</p>
-<p>调用<code>f.bind(obj)</code>会常见一个新的函数, 但是函数体内的<code>this</code>将永久的被绑定到obj. 无论这个函数在哪里被调用</p>
-<p>##箭头函数内调用this</p>
-<pre><code>// 创建一个含有bar方法的obj对象，
+<h2 id="bind方法调用this"><a href="#bind方法调用this" class="headerlink" title="bind方法调用this"></a>bind方法调用this</h2><p>调用<code>f.bind(obj)</code>会创建一个新的函数, 但是函数体内的<code>this</code>将永久的被绑定到obj. 无论这个函数在哪里被调用</p>
+<pre><code>function f(){
+    return this.a;
+}
+
+var g = f.bind({a:&quot;azerty&quot;});
+console.log(g()); // azerty
+
+var h = g.bind({a:&apos;yoo&apos;}); // bind只生效一次！
+console.log(h()); // azerty
+
+var o = {a:37, f:f, g:g, h:h};
+console.log(o.f(), o.g(), o.h()); // 37, azerty, azerty
+</code></pre><h2 id="箭头函数内调用this"><a href="#箭头函数内调用this" class="headerlink" title="箭头函数内调用this"></a>箭头函数内调用this</h2><pre><code>// 创建一个含有bar方法的obj对象，
 // bar返回一个函数，
 // 这个函数返回this，
 // 这个返回的函数是以箭头函数创建的，
@@ -366,6 +376,8 @@ var obj = {
         return x;
     }
 };
+
+
 
 //作为对比,创建一个obj2
 var obj2 = {
@@ -381,9 +393,14 @@ var fn2 = obj2.bar();
 console.log(fn()===obj);     //结果1:  返回true
 console.log(fn2()===obj2);   //结果2:  返回false
 console.log(fn2()===window); //结果3:  返回true
-</code></pre><p>看结果,体会箭头函数和普通函数的区别.  特别注意这这行注视 <strong>所以它的this被永久绑定到了它外层函数的this。</strong></p>
-<p>##作为对象的方法调用this</p>
-<p>函数作为对象里的方法调用时, <code>this</code>指向调用该函数的对象.</p>
+
+// 但是注意，如果你只是引用obj的方法，
+// 而没有调用它
+var fn3 = obj.bar;
+// 那么调用箭头函数后，this指向window，因为它从 bar 继承了this。
+console.log(fn3()() == window); // true
+</code></pre><p>看结果,体会箭头函数和普通函数的区别.  特别注意这行注释 <strong>所以它的this被永久绑定到了它外层函数的this。</strong></p>
+<h2 id="作为对象的方法调用this"><a href="#作为对象的方法调用this" class="headerlink" title="作为对象的方法调用this"></a>作为对象的方法调用this</h2><p>函数作为对象里的方法调用时, <code>this</code>指向调用该函数的对象.</p>
 <pre><code>var o = {
     prop: 37,
     f: function() {
